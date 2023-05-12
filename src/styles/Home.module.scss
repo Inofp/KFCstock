@@ -66,7 +66,12 @@
 
     display: flex;
     flex-direction: column;
-    
+}
+
+@media screen and (max-width: 1024px) {
+    .home__container {
+        min-width: 600px;
+    }
 }
 
 .home__sidebar {
@@ -123,6 +128,12 @@
     cursor: pointer;
 }
 
+@media screen and (max-width: 1024px) {
+    .catalog__list_item {
+        padding-top: 14px;
+    }
+}
+
 .catalog__list {
     font-size: 18px;
     color: #152342;
@@ -144,4 +155,5 @@
     padding-top: 1vh;
     font-family: Inter,sans-serif;
 }
+
 

@@ -30,14 +30,14 @@ const Toplane = () => {
   }
 
   return (
-    <div className='flex items-center justify-center'>
-      <Link href="/home"><Image src="/logo.svg" alt='logo-pic' width={135} height={100} /></Link>
+    <div className='flex items-center justify-center max-lg:flex-col'>
+      <Link href="/home" className='max-lg:my-5'><Image src="/logo.svg" alt='logo-pic' width={135} height={100} /></Link>
 
-      <button className='bg-red-500 text-white p-[11px] pr-[22px] rounded-xl flex justify-center items-center ml-6 font-medium text-base' onClick={handleClick}>
+      <button className='max-lg:hidden bg-red-500 text-white p-[11px] pr-[22px] rounded-xl flex justify-center items-center ml-6 font-medium text-base' onClick={handleClick}>
         <GiHamburgerMenu /> <span className='ml-2 '>Каталог</span>
       </button>
 
-      <form onSubmit={handleSearchSubmit} className='bg-[#f4f4f4] font-medium w-full max-w-[600px] rounded-xl px-2 py-1 ml-4 flex justify-start border-transparent border-solid border-2 hover:border-gray-500 transition border-color duration-200 ease-in-out'>
+      <form onSubmit={handleSearchSubmit} className=' bg-[#f4f4f4] font-medium w-full max-w-[600px] rounded-xl px-2 py-1 ml-4 flex justify-start border-transparent border-solid border-2 hover:border-gray-500 transition border-color duration-200 ease-in-out'>
         <button
           type="submit"
           className=" text-[28px] text-[#9b9b9c]"
@@ -55,7 +55,7 @@ const Toplane = () => {
 
       </form>
 
-      <div className='flex justify-between items-center ml-1'>
+      <div className='flex justify-between items-center ml-1 max-lg:hidden'>
         <div className='px-3 flex flex-col items-center justify-center cursor-pointer hover:shadow-md rounded-xl select-none'>
           <div className='text-2xl'><BiUser /></div>
           <span>Серёга</span>

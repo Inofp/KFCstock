@@ -2,44 +2,63 @@ import styles from "@/styles/Home.module.scss";
 import MySlider from '../UI/MySlider';
 import Toplane from './Toplane';
 import Link from "next/link";
+import { GiHamburgerMenu } from 'react-icons/gi';
 
 
 
 
 const Home = () => {
-  
+
+  const catalogLinks = [
+    'Каплесборники',
+    'Крышки',
+    'Шейкеры',
+    'Вентиляторы',
+    'Ручки',
+    'Трубки',
+    'Платы',
+    'Жаровни',
+    'Панели',
+    'Клапаны',
+    'Термостаты',
+    'Розетки'
+  ];
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    router.push('/catalog')
+  }
+
   return (
     <div className={styles.home__wrapper}>
       <div className={styles.home__container}>
-        
+
         <div>
-          <Toplane/>
+          <Toplane />
         </div>
 
         <div className='flex'>
           <div className={styles.home__sidebar}>
             <nav className={styles.home__sidebar__item}>
               <ul className={styles.catalog__list}>
-                <Link href="/home"><li className={styles.catalog__list_item}>Каплесборники</li></Link>
-                <Link href="/home"><li className={styles.catalog__list_item}>Крышки</li></Link>
-                <Link href="/home"><li className={styles.catalog__list_item}>Шейкеры</li></Link>
-                <Link href="/home"><li className={styles.catalog__list_item}>Вентиляторы</li></Link>
-                <Link href="/home"><li className={styles.catalog__list_item}>Ручки</li></Link>
-                <Link href="/home"><li className={styles.catalog__list_item}>Трубки</li></Link>
-                <Link href="/home"><li className={styles.catalog__list_item}>Платы</li></Link>
-                <Link href="/home"><li className={styles.catalog__list_item}>Жаровни</li></Link>
-                <Link href="/home"><li className={styles.catalog__list_item}>Панели управления</li></Link>
-                <Link href="/home"><li className={styles.catalog__list_item}>Клапаны</li></Link>
-                <Link href="/home"><li className={styles.catalog__list_item}>Термостаты</li></Link>
-                <Link href="/home"><li className={styles.catalog__list_item}>Розетки</li></Link>
+                {catalogLinks.map((linkText, index) => (
+                  <Link href="/home" key={`catalog-link-${index}`}><li className={styles.catalog__list_item}>{linkText}</li></Link>
+                ))}
+
               </ul>
             </nav>
           </div>
 
 
-          <div className='w-[600px] h-[398px] ml-8'>
+          <div className='w-[600px] h-[398px] ml-8 max-lg:hidden'>
             <h1 className={styles.test}>Доступные склады</h1>
             <MySlider />
+          </div>
+
+          <div className="">
+            <button className='lg:hidden bg-red-500 text-white p-[11px] pr-[22px] rounded-xl flex justify-center items-center ml-6 font-medium text-base' onClick={handleClick}>
+              <GiHamburgerMenu /> <span className='ml-2 '>Открыть каталог</span>
+            </button>
           </div>
 
 

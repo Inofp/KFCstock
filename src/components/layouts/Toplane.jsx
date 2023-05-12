@@ -70,11 +70,6 @@ const Toplane = () => {
           <div className='px-3 flex flex-col items-center justify-center cursor-pointer hover:shadow-md rounded-xl relative select-none'>
             <div className='text-2xl ' ><FiShoppingCart /></div>
             <span >Корзина</span>
-            {/* {isCartOpen && (
-            <div className='absolute shadow-lg bg-white top-12 -left-100 w-[400px] h-[100px] z-50'>
-                
-            </div>
-          )} */}
           </div>
         </Link>
 

@@ -55,7 +55,7 @@ const Catalog = () => {
           <div className='flex min-w-[212px] max-h-[306px]  pl-1 shadow-md'>
             <div className='w-full'>
               <div className='flex justify-between items-center'>
-                <span className='text-lg font-medium'>Склад</span>
+                <span className='text-md font-semibold hover:text-[#5b5e67]'>Склад</span>
                 <MdExpandLess className='text-[30px] leading-[20px]' />
               </div>
 
@@ -79,39 +79,39 @@ const Catalog = () => {
 
               <div className='mt-3'>
                 <div className='flex items-center py-1 '>
-                  <input type="checkbox" className='h-[20px] w-[20px] rounded-xl' />
+                  <input type="checkbox" className='h-[20px] w-[20px]' />
                   <span className='pl-3'>Малиновка</span>
                 </div>
 
                 <div className='flex items-center py-1'>
-                  <input type="checkbox" className='h-[20px] w-[20px] rounded-xl' />
+                  <input type="checkbox" className='h-[20px] w-[20px]' />
                   <span className='pl-3'>Восток</span>
                 </div>
 
                 <div className='flex items-center py-1'>
-                  <input type="checkbox" className='h-[20px] w-[20px] rounded-xl' />
+                  <input type="checkbox" className='h-[20px] w-[20px]' />
                   <span className='pl-3'>Уручье</span>
                 </div>
 
                 <div className='flex items-center py-1'>
-                  <input type="checkbox" className='h-[20px] w-[20px] rounded-xl' />
+                  <input type="checkbox" className='h-[20px] w-[20px]' />
                   <span className='pl-3'>Сева</span>
                 </div>
 
                 <div className='flex items-center py-1'>
-                  <input type="checkbox" className='h-[20px] w-[20px] rounded-xl' />
+                  <input type="checkbox" className='h-[20px] w-[20px]' />
                   <span className='pl-3'>Инста</span>
                 </div>
 
                 <div className='flex items-center py-1'>
-                  <input type="checkbox" className='h-[20px] w-[20px] rounded-xl' />
+                  <input type="checkbox" className='h-[20px] w-[20px]' />
                   <span className='pl-3'>Сити</span>
                 </div>
 
               </div>
 
               <div className='mb-2'>
-                <span className='text-blue-700'>Показать все</span>
+                <span className='text-[#0a84ff] text-[15px] font-normal hover:text-[#0058a6] cursor-pointer select-none'>Показать все</span>
               </div>
 
 

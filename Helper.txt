@@ -1,2 +1,3 @@
 <Link href="/catalog" className="text-inherit no-underline hover:text-inherit hover:no-underline">{category}</Link>
 
+text-decoration-none text-inherit hover:text-inherit // для ссылок отмена

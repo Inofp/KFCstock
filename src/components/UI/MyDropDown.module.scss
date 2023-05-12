@@ -1,0 +1,120 @@
+.dropdown__wrapper {
+    position: relative;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    border-radius: 11px;
+    cursor: pointer;
+    width: 360px;
+}
+
+.dropdown__fieldset {
+    margin: 0;
+    color: #1c1c1e;
+    border: 1px solid #d8d8dd;
+    border-radius: 11px;
+    font-size: 15px;
+    position: absolute;
+    top: -10px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    transition: border-color .3s
+}
+
+:hover>.dropdown__fieldset:not(.dropdown__fieldset_opened) {
+    border-color: #b5b5b8
+}
+
+.dropdown__fieldset_opened {
+    border-color: #1c1c1e
+}
+
+.dropdown__fieldset_error {
+    border-color: #ff3b30
+}
+
+.dropdown__legend {
+    font-size: 12px;
+    padding-inline:4px 4px;color: #777778;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 90%
+}
+
+.dropdown__legend_opened {
+    color: #1c1c1e
+}
+
+.dropdown__legend_hidden {
+    width: 0;
+    overflow: hidden;
+    padding-inline:0 0}
+
+.dropdown__legend_error {
+    color: #ff3b30
+}
+
+.dropdown__content {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex: 1 1
+}
+
+.dropdown__text {
+    flex-grow: 1;
+    padding-left: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.dropdown__text_error {
+    color: #ff3b30
+}
+
+.dropdown__toggle {
+    color: #b5b5b8;
+    transition: transform .3s,color .3s
+}
+
+.dropdown__toggle_opened {
+    transform: rotate(180deg);
+    color: #1c1c1e
+}
+
+.dropdown__icon {
+    margin-right: 4px
+}
+
+.dropdown__caption {
+    font-size: 12px;
+    color: #777778;
+    position: absolute;
+    left: 14px;
+    top: calc(100% + 4px)
+}
+
+.dropdown__caption_error {
+    color: #ff3b30
+}
+
+.dropdown__popup {
+    box-shadow: 0 0 12px rgba(28,28,30,.08);
+    border-radius: 12px;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height .3s;
+    width: 100%
+}
+
+.dropdown__popup_opened {
+    max-height: 250px
+}

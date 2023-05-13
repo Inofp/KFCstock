@@ -67,9 +67,13 @@ const Toplane = () => {
         </div>
 
         <Link href='/cart' className='text-decoration-none text-inherit hover:text-inherit'>
-          <div className='px-3 flex flex-col items-center justify-center cursor-pointer hover:shadow-md rounded-xl relative select-none'>
-            <div className='text-2xl ' ><FiShoppingCart /></div>
+          <div className='mx-3 flex flex-col items-center justify-center cursor-pointer hover:shadow-md rounded-xl relative select-none'>
+            <div className='text-2xl' >
+            <div className='absolute text -top-3 z-1000 right-1 bg-[#ff3b30] text-[0.7rem] font-medium h-[20px] text-white flex justify-center items-center px-[6.3px] rounded-full'>1</div>
+              <FiShoppingCart />
+            </div>
             <span >Корзина</span>
+            
           </div>
         </Link>
 

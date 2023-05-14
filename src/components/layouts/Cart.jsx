@@ -27,7 +27,9 @@ const Cart = () => {
                         <h1>Корзина</h1>
                     </div>
 
-                    <div className="bg-red-400 w-full h-[150px] mt-2"></div>
+                    <div className="bg-red-400 w-full h-[150px] mt-2">
+                        
+                    </div>
 
                     <div className='flex justify-center'>
                         <div className='flex-col w-1/3'>

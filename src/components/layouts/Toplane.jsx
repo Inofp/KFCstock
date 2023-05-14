@@ -5,13 +5,17 @@ import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import Link from 'next/link';
+import { CartContext } from "../contexts/CartContext";
+import Cookies from 'js-cookie';
 
 const Toplane = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  // const [isCartOpen, setIsCartOpen] = useState(false);
+  const { cartItems } = useContext(CartContext);
 
+
+  const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -69,7 +73,10 @@ const Toplane = () => {
         <Link href='/cart' className='text-decoration-none text-inherit hover:text-inherit'>
           <div className='mx-3 flex flex-col items-center justify-center cursor-pointer hover:shadow-md rounded-xl relative select-none'>
             <div className='text-2xl' >
-            <div className='absolute text -top-3 z-1000 right-1 bg-[#ff3b30] text-[0.7rem] font-medium h-[20px] text-white flex justify-center items-center px-[6.3px] rounded-full'>1</div>
+            <div className={`${totalQuantity === 0 ? 'hidden' : 'absolute text -top-3 z-1000 right-1 bg-[#ff3b30] text-[0.7rem] font-medium h-[20px] text-white flex justify-center items-center px-[6.3px] rounded-full'}`}>
+
+              {totalQuantity}
+              </div>
               <FiShoppingCart />
             </div>
             <span >Корзина</span>

@@ -5,10 +5,25 @@ import Bread from "./Bread";
 import Breadcrumb from "./Breadcrumb";
 import { MdOutlineFavoriteBorder } from "react-icons/md";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import Botlane from "./Botlane";
+import { useContext } from 'react';
+import { CartContext } from "../contexts/CartContext";
 
 const Product = ({ product }) => {
   const { title, description, imgUrl } = product || {};
+
+  const { addToCart, cartItems, changeQuantity, makeTest } = useContext(CartContext);
+
+  const handleIncreaseQuantity = (item) => {
+    const newQuantity = item.quantity + 1;
+    changeQuantity(item, newQuantity);
+  };
+
+  const handleDecreaseQuantity = (item) => {
+    const newQuantity = item.quantity - 1;
+    changeQuantity(item, newQuantity);
+  };
 
   if (!product) {
     return (
@@ -93,9 +108,17 @@ const Product = ({ product }) => {
 
               <div className="shadow-md p-[20px] rounded-md flex-col items-center justify-center mt-4">
                 <h5>Малиновка</h5>
-                <button className="bg-red-500 text-white p-[12px] px-[31px] mt-4 rounded-xl flex justify-center items-center font-medium text-base">
+                {cartItems.includes(product) ? (
+                              <div className='flex h-[34px] justify-between items-center mb-0 bg-red-300 rounded-xl z-10000'>
+                                <button className='text-2xl hover:shadow-xl pl-2' onClick={() => handleDecreaseQuantity(product)}><AiOutlineMinus /></button>
+                                <div className='w-full flex justify-center'>{product.quantity}</div>
+                                <button className='text-2xl hover:shadow-xl pr-2' onClick={() => handleIncreaseQuantity(product)}><AiOutlinePlus /></button>
+                              </div>
+                            ) : (
+                <button className="bg-red-500 text-white p-[12px] px-[31px] mt-4 rounded-xl flex justify-center items-center font-medium text-base" onClick={() => addToCart(product)}>
                   <span className="ml-2 font-medium">Добавить в корзину</span>
-                </button>
+                  </button>
+                    )}
               </div>
 
             </div>

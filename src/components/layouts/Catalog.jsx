@@ -4,14 +4,27 @@ import Link from 'next/link';
 import styles from '@/styles/Catalog.module.scss'
 import Image from 'next/image';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
-import { AiOutlineSearch, AiOutlineInfoCircle, AiOutlineEye } from 'react-icons/ai';
+import { AiOutlineSearch, AiOutlineInfoCircle, AiOutlineEye, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { FiShoppingCart } from 'react-icons/fi';
 import userData from './data';
+import { CartContext } from "../contexts/CartContext";
+import { useContext } from 'react';
 
 
 
 const Catalog = () => {
+  const { addToCart, cartItems, changeQuantity, makeTest } = useContext(CartContext);
+
+  const handleIncreaseQuantity = (item) => {
+    const newQuantity = item.quantity + 1;
+    changeQuantity(item, newQuantity);
+  };
+
+  const handleDecreaseQuantity = (item) => {
+    const newQuantity = item.quantity - 1;
+    changeQuantity(item, newQuantity);
+  };
 
   return (
     <div className="w-full min-h-full flex justify-center overflow-auto">
@@ -123,32 +136,50 @@ const Catalog = () => {
             <div>
               <div className='flex ml-8 flex-wrap'>
                 {userData.items.map((item, index) => (
-                  <Link href={`/products/${index}`} className='text-inherit no-underline hover:text-inherit hover:no-underline cursor-auto'>
-                    <div className={styles.catalog_item}>
-                      <div key={item.title} className='flex-col w-[185px] h-[323px] hover:shadow-lg p-1 mb-4 mr-5'>
-                        <div className='relative flex items-center justify-center'>
-                          <Image src={item.imgUrl} alt='banner' width={185} height={150} />
-                          <div className={styles.eye}>
-                            <AiOutlineEye />
-                          </div>
-                        </div>
-                        <div className='cursor-pointer'><span>{item.title}</span></div>
-                        <div className=' text-gray-700 pb-1 pt-4'><span>{item.description}</span></div>
-                        <div className='flex h-[34px] justify-between '>
-                          <button className='bg-red-400 rounded-md px-[15px] w-1/2 hover:bg-red-500 transition duration-300 ease-in-out'>
-                            <div className='flex flex-col items-center justify-center cursor-pointer'>
-                              <div className='text-2xl text-white'><FiShoppingCart fontSize="0.85em" /></div>
+                  <div>
+                    <div>
+
+                      <div className={styles.catalog_item}>
+                        <div key={item.title} className='flex-col w-[185px] h-[323px] hover:shadow-lg p-1 mb-4 mr-5'>
+                          <Link href={`/products/${index}`} className='text-inherit no-underline hover:text-inherit hover:no-underline cursor-auto'><div className='relative flex items-center justify-center'>
+                            <Image src={item.imgUrl} alt='banner' width={185} height={150} />
+                            <div className={styles.eye}>
+                              <AiOutlineEye />
                             </div>
-                          </button>
-                          <div className='px-3  flex'>
-                            <div className='text-2xl pr-4 text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'><AiOutlineInfoCircle className='cursor-pointer' /></div>
-                            <div className='text-2xl text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'><MdOutlineFavoriteBorder className='cursor-pointer' /></div>
                           </div>
+                            <div className='cursor-pointer'><span>{item.title}</span></div>
+                            <div className=' text-gray-700 pb-1 pt-4'><span>{item.description}</span></div>
+                          </Link>
+                          <div>
+                            {cartItems.includes(item) ? (
+                              <div className='flex h-[34px] justify-between items-center mb-0 bg-red-300 rounded-xl z-10000'>
+                                <button className='text-2xl hover:shadow-xl pl-2' onClick={() => handleDecreaseQuantity(item)}><AiOutlineMinus /></button>
+                                <div className='w-full flex justify-center'>{item.quantity}</div>
+                                <button className='text-2xl hover:shadow-xl pr-2' onClick={() => handleIncreaseQuantity(item)}><AiOutlinePlus /></button>
+                              </div>
+                            ) : (
+                              <div className='flex h-[34px] justify-between '>
+                                <button className='bg-red-400 rounded-md px-[15px] w-1/2 hover:bg-red-500 transition duration-300 ease-in-out' onClick={() => addToCart(item)}>
+                                  <div className='flex flex-col items-center justify-center cursor-pointer'>
+                                    <div className='text-2xl text-white'><FiShoppingCart fontSize="0.85em" /></div>
+                                  </div>
+                                  </button>                                
+                                <div className='px-3  flex'>
+                                  <div className='text-2xl pr-4 text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'><AiOutlineInfoCircle className='cursor-pointer' /></div>
+                                  <div className='text-2xl text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'><MdOutlineFavoriteBorder className='cursor-pointer' /></div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+
                         </div>
                       </div>
-                    </div>
-                  </Link>
 
+                      <button onClick={() => makeTest(item)}>
+                                    Test
+                                  </button>
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -156,7 +187,6 @@ const Catalog = () => {
 
           </div>
         </div>
-
       </div>
     </div>
   );

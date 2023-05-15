@@ -49,9 +49,9 @@ const Product = ({ product }) => {
           <h2 className="font-bold mt-4">{title}</h2>
 
           <div className="flex max-lg:flex-col">
-            <Image src={imgUrl} alt="product pic" width={430} height={430} />
+            <div><Image src={imgUrl} alt="product pic" width={430} height={430} /></div>
 
-            <div className="flex-col mt-3">
+            <div className="flex-col mt-3 mx-6">
               <div className="mb-2">
                 <span className="font-medium">Описание продукта</span>
               </div>
@@ -108,24 +108,34 @@ const Product = ({ product }) => {
 
               <div className="shadow-md p-[20px] rounded-md flex-col items-center justify-center mt-4">
                 <h5>Малиновка</h5>
-                {cartItems.includes(product) ? (
-                              <div className='flex h-[34px] justify-between items-center mb-0 bg-red-300 rounded-xl z-10000'>
-                                <button className='text-2xl hover:shadow-xl pl-2' onClick={() => handleDecreaseQuantity(product)}><AiOutlineMinus /></button>
-                                <div className='w-full flex justify-center'>{product.quantity}</div>
-                                <button className='text-2xl hover:shadow-xl pr-2' onClick={() => handleIncreaseQuantity(product)}><AiOutlinePlus /></button>
-                              </div>
-                            ) : (
-                <button className="bg-red-500 text-white p-[12px] px-[31px] mt-4 rounded-xl flex justify-center items-center font-medium text-base" onClick={() => addToCart(product)}>
-                  <span className="ml-2 font-medium">Добавить в корзину</span>
+
+                {cartItems.find(cartItem => cartItem.id === product.id) ? (
+                  cartItems.map((cartItem) => {
+                    if (cartItem.id === product.id) {
+                      return (
+                        <div className='flex h-[34px] justify-between items-center mb-0 shadow-md runded-xl z-10000'>
+                          <button className='text-2xl hover:shadow-xl p-[0.3rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center' onClick={() => handleDecreaseQuantity(product)}><AiOutlineMinus /></button>
+                          <div className='w-full flex justify-center'>{cartItem.quantity}</div>
+                          <button className='text-2xl hover:shadow-xl p-[0.3rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center' onClick={() => handleIncreaseQuantity(product)}><AiOutlinePlus /></button>
+                        </div>
+                      )
+                    } else {
+                      return null
+                    }
+                  })
+                ) : (
+                  <button className="bg-red-500 text-white p-[12px] px-[31px] mt-4 rounded-xl flex justify-center items-center font-medium text-base" onClick={() => addToCart(product)}>
+                    <span className="ml-2 font-medium">Добавить в корзину</span>
                   </button>
-                    )}
+                )}
               </div>
+
 
             </div>
           </div>
         </div>
       </div>
-      <Botlane/>
+      <Botlane />
     </div>
   );
 };

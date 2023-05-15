@@ -3,7 +3,11 @@ import React, { createContext, useState, useEffect } from "react";
 export const CartContext = createContext();
 
 const CartContextProvider = ({ children }) => {
+  const ls = typeof window !== "undefined" ? window.localStorage : null;
   const [cartItems, setCartItems] = useState([]);
+
+  // время жизни корзины в миллисекундах (3 часа)
+  const expirationTime = 3 * 60 * 60 * 1000;
 
   // добавление элемента в корзину
   const addToCart = (item) => {
@@ -12,7 +16,9 @@ const CartContextProvider = ({ children }) => {
 
   // удаление элемента из корзины
   const removeFromCart = (item) => {
-    const newCartItems = cartItems.filter((cartItem) => cartItem.id !== item.id);
+    const newCartItems = cartItems.filter(
+      (cartItem) => cartItem.id !== item.id
+    );
     setCartItems(newCartItems);
   };
 
@@ -29,20 +35,34 @@ const CartContextProvider = ({ children }) => {
     }
   };
 
+  // тестовая функция
   const makeTest = (item, quantity) => {
     console.log(cartItems);
   };
 
   // сохранение состояния корзины в localStorage
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cartItems));
+    const now = new Date().getTime();
+    if (cartItems?.length > 0) {
+      ls?.setItem("cart", JSON.stringify(cartItems));
+      ls?.setItem("cartExpiration", now + expirationTime);
+    }
   }, [cartItems]);
 
-  // загрузка состояния корзины из localStorage при инициализации
+  // удаление данных из localStorage при истечении срока действия
   useEffect(() => {
-    const cartData = localStorage.getItem("cart");
-    if (cartData) {
-      setCartItems(JSON.parse(cartData));
+    const expiration = ls?.getItem("cartExpiration");
+    const now = new Date().getTime();
+    if (expiration && now > expiration) {
+      ls?.removeItem("cart");
+      ls?.removeItem("cartExpiration");
+    }
+  }, []);
+
+  // получение состояния корзины из localStorage при монтировании компонента
+  useEffect(() => {
+    if (ls && ls.getItem("cart")) {
+      setCartItems(JSON.parse(ls.getItem("cart")));
     }
   }, []);
 

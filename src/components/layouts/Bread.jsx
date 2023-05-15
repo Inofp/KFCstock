@@ -22,7 +22,7 @@ const Bread = () => {
       <div className='max-lg:mt-2 '>
         <ul className={styles.catalog_links}>
           {catalogLinks.map((linkText, index) => (
-            <Link href="/" key={`catalog-link-${index}`} className='text-[#1c1c1e] text-[14px] hover:text-[#1c1c1e] max-lg:px-2'>
+            <Link href="/catalog" key={`catalog-link-${index}`} className='text-[#1c1c1e] text-[14px] hover:text-[#1c1c1e] max-lg:px-2'>
               <li className='pr-5 max-lg:border max-lg:border-gray-300 max-lg:p-2 max-lg:rounded-md'>{linkText}</li>
             </Link>
           ))}

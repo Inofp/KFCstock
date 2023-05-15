@@ -93,32 +93,38 @@ const Catalog = () => {
 
                 <div className='mt-3'>
                   <div className='flex items-center py-1 '>
-                    <input type="checkbox" className='h-[20px] w-[20px] rounded bg-red-500 bg-opacity-50' />
+                    <div className='h-[20px] mr-4 w-[20px] border-[#d8d8dd] border-[1px]  hover:border-[#b5b5b8] rounded-[4.2px] transition-all duration-300'>
+                    </div>
                     <span className='pl-3'>Малиновка</span>
                   </div>
 
                   <div className='flex items-center py-1'>
-                    <input type="checkbox" className='h-[20px] w-[20px]' />
+                  <div className='h-[20px] mr-4 w-[20px] border-[#d8d8dd] border-[1px]  hover:border-[#b5b5b8] rounded-[4.2px] transition-all duration-300'>
+                                            </div>
                     <span className='pl-3'>Восток</span>
                   </div>
 
                   <div className='flex items-center py-1'>
-                    <input type="checkbox" className='h-[20px] w-[20px]' />
+                  <div className='h-[20px] mr-4 w-[20px] border-[#d8d8dd] border-[1px]  hover:border-[#b5b5b8] rounded-[4.2px] transition-all duration-300'>
+                                            </div>
                     <span className='pl-3'>Уручье</span>
                   </div>
 
                   <div className='flex items-center py-1'>
-                    <input type="checkbox" className='h-[20px] w-[20px]' />
+                  <div className='h-[20px] mr-4 w-[20px] border-[#d8d8dd] border-[1px]  hover:border-[#b5b5b8] rounded-[4.2px] transition-all duration-300'>
+                                            </div>
                     <span className='pl-3'>Сева</span>
                   </div>
 
                   <div className='flex items-center py-1'>
-                    <input type="checkbox" className='h-[20px] w-[20px]' />
+                  <div className='h-[20px] mr-4 w-[20px] border-[#d8d8dd] border-[1px]  hover:border-[#b5b5b8] rounded-[4.2px] transition-all duration-300'>
+                                            </div>
                     <span className='pl-3'>Инста</span>
                   </div>
 
                   <div className='flex items-center py-1'>
-                    <input type="checkbox" className='h-[20px] w-[20px]' />
+                  <div className='h-[20px] mr-4 w-[20px] border-[#d8d8dd] border-[1px]  hover:border-[#b5b5b8] rounded-[4.2px] transition-all duration-300'>
+                                            </div>
                     <span className='pl-3'>Сити</span>
                   </div>
 
@@ -140,30 +146,46 @@ const Catalog = () => {
                     <div>
 
                       <div className={styles.catalog_item}>
-                        <div key={item.title} className='flex-col w-[185px] h-[323px] hover:shadow-lg p-1 mb-4 mr-5'>
+                        <div key={item.title} className='flex-col w-[205px] h-[323px] hover:shadow-lg p-2 mb-4 mr-5'>
                           <Link href={`/products/${index}`} className='text-inherit no-underline hover:text-inherit hover:no-underline cursor-auto'><div className='relative flex items-center justify-center'>
                             <Image src={item.imgUrl} alt='banner' width={185} height={150} />
                             <div className={styles.eye}>
                               <AiOutlineEye />
                             </div>
                           </div>
-                            <div className='cursor-pointer'><span>{item.title}</span></div>
-                            <div className=' text-gray-700 pb-1 pt-4'><span>{item.description}</span></div>
+                            <div className='cursor-pointer text-[15px] h-[35px] pt-2'><span>{item.title}</span></div>
+                            <div className=' text-gray-700 pb-1 pt-4 text-[13px]'><span>{item.description}</span></div>
                           </Link>
-                          <div>
-                            {cartItems.includes(item) ? (
-                              <div className='flex h-[34px] justify-between items-center mb-0 bg-red-300 rounded-xl z-10000'>
-                                <button className='text-2xl hover:shadow-xl pl-2' onClick={() => handleDecreaseQuantity(item)}><AiOutlineMinus /></button>
-                                <div className='w-full flex justify-center'>{item.quantity}</div>
-                                <button className='text-2xl hover:shadow-xl pr-2' onClick={() => handleIncreaseQuantity(item)}><AiOutlinePlus /></button>
-                              </div>
+                          <div className='mb-1'>
+                            {cartItems.find(cartItem => cartItem.id === item.id) ? (
+                              cartItems.map((cartItem) => {
+                                if (cartItem.id === item.id) {
+                                  return (
+                                    <div key={cartItem.id} className='flex h-[37px] justify-between items-center mb-0 shadow-md rounded-xl z-10000 '>
+                                      <div className='text-2xl hover:shadow-xl p-[0.45rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center select-none' onClick={() => handleDecreaseQuantity(cartItem)}>
+                                        <div>
+                                          <AiOutlineMinus />
+                                        </div>
+                                      </div>
+                                      <div className='w-full flex justify-center'>{cartItem.quantity}</div>
+                                      <div className='text-2xl hover:shadow-xl p-[0.45rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center select-none' onClick={() => handleIncreaseQuantity(cartItem)}>
+                                        <div>
+                                          <AiOutlinePlus />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )
+                                } else {
+                                  return null
+                                }
+                              })
                             ) : (
-                              <div className='flex h-[34px] justify-between '>
+                              <div className='flex h-[34px] justify-between mb-2'>
                                 <button className='bg-red-400 rounded-md px-[15px] w-1/2 hover:bg-red-500 transition duration-300 ease-in-out' onClick={() => addToCart(item)}>
                                   <div className='flex flex-col items-center justify-center cursor-pointer'>
                                     <div className='text-2xl text-white'><FiShoppingCart fontSize="0.85em" /></div>
                                   </div>
-                                  </button>                                
+                                </button>
                                 <div className='px-3  flex'>
                                   <div className='text-2xl pr-4 text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'><AiOutlineInfoCircle className='cursor-pointer' /></div>
                                   <div className='text-2xl text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'><MdOutlineFavoriteBorder className='cursor-pointer' /></div>
@@ -175,9 +197,9 @@ const Catalog = () => {
                         </div>
                       </div>
 
-                      <button onClick={() => makeTest(item)}>
-                                    Test
-                                  </button>
+                      {/* <button onClick={() => makeTest(item)}>
+                        Test
+                      </button> */}
                     </div>
                   </div>
                 ))}

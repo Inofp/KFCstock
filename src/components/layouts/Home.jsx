@@ -42,7 +42,7 @@ const Home = () => {
             <nav className={styles.home__sidebar__item}>
               <ul className={styles.catalog__list}>
                 {catalogLinks.map((linkText, index) => (
-                  <Link href="/home" key={`catalog-link-${index}`}><li className={styles.catalog__list_item}>{linkText}</li></Link>
+                  <Link href="/catalog" key={`catalog-link-${index}`}><li className={styles.catalog__list_item}>{linkText}</li></Link>
                 ))}
 
               </ul>

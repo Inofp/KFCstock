@@ -1,5 +1,4 @@
 import React, { createContext, useState, useEffect } from "react";
-import cookie from 'js-cookie';
 
 export const CartContext = createContext();
 
@@ -32,23 +31,25 @@ const CartContextProvider = ({ children }) => {
 
   const makeTest = (item, quantity) => {
     console.log(cartItems);
-  }
+  };
 
-  // сохранение состояния корзины в cookies
+  // сохранение состояния корзины в localStorage
   useEffect(() => {
-    cookie.set('cart', JSON.stringify(cartItems));
+    localStorage.setItem("cart", JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // загрузка состояния корзины из cookies при инициализации
+  // загрузка состояния корзины из localStorage при инициализации
   useEffect(() => {
-    const cartData = cookie.get('cart');
+    const cartData = localStorage.getItem("cart");
     if (cartData) {
       setCartItems(JSON.parse(cartData));
     }
   }, []);
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, changeQuantity, makeTest }}>
+    <CartContext.Provider
+      value={{ cartItems, addToCart, removeFromCart, changeQuantity, makeTest }}
+    >
       {children}
     </CartContext.Provider>
   );

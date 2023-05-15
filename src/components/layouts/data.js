@@ -9,7 +9,7 @@ const userData = {
     },
     {
       id: 1,
-      title: "Elaine",
+      title: "Arima",
       description: "Холодосы",
       imgUrl: "/star1.jpg",
       quantity: 1,

@@ -5,6 +5,8 @@ import { CartContext } from "../contexts/CartContext";
 import { useContext } from 'react';
 import Image from 'next/image';
 import Toplane from './Toplane';
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import Botlane from "./Botlane";
 
 
 const Cart = () => {
@@ -17,7 +19,17 @@ const Cart = () => {
     const [selectedRest, setSelectedRest] = useState(null);
     const Rests = ['Центральный', 'Восточный', 'Звёздный'];
 
-    const { cartItems, makeTest } = useContext(CartContext);
+    const { addToCart, cartItems, changeQuantity, makeTest } = useContext(CartContext);
+
+    const handleIncreaseQuantity = (item) => {
+        const newQuantity = item.quantity + 1;
+        changeQuantity(item, newQuantity);
+      };
+    
+      const handleDecreaseQuantity = (item) => {
+        const newQuantity = item.quantity - 1;
+        changeQuantity(item, newQuantity);
+      };
 
 
 
@@ -26,13 +38,13 @@ const Cart = () => {
             <div className='py-4'>
                 <Toplane />
             </div>
-            <div className='flex justify-center items-center bg-gray-100 min-h-full'>
+            <div className='flex justify-center  items-center  bg-gray-100 min-h-full mb-20'>
                 <div className="w-[1200px]">
-                    <div className='my-4'>
+                    <div className='my-4 max-lg:px-[14%]'>
                         <Link href="/catalog" className='text-[14px] text-decoration-none text-[#777778] hover:text-inherit'>Вернуться в каталог</Link>
                     </div>
 
-                    <div className='flex mb-4 min-h-full '>
+                    <div className='flex mb-4 min-h-full max-lg:flex-col max-lg:items-center'>
                         <div className='bg-white w-3/4 rounded-2xl'>
                             <div className='p-4'>
                                 <div className='flex'>
@@ -53,21 +65,33 @@ const Cart = () => {
                                     </div>
                                 </div>
 
-                                <div className="flex-col w-full h-[150px] mt-2">
+                                <div className="flex-col w-full mt-2">
                                     {cartItems.map((item) => (
-                                        <div className='flex py-4 border-t-[1px]'>
+                                        <div className='flex py-4 border-t-[1px] relative'>
                                             <div className='h-[20px] mr-4 w-[20px] border-[#d8d8dd] border-[1px]  hover:border-[#b5b5b8] rounded-[4.2px] transition-all duration-300'>
                                             </div>
                                             <div className=''><Image src={item.imgUrl} alt='banner' width={80} height={80} /></div>
                                             <div className='ml-6'>{item.title}</div>
-                                            <div className='ml-6'>{item.quantity}</div>
+                                            <div key={item.id} className='flex h-[37px] absolute right-0 justify-between items-center mb-0 shadow-md rounded-xl z-10000 '>
+                                                <div className='text-2xl hover:shadow-xl p-[0.45rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center select-none' onClick={() => handleDecreaseQuantity(item)}>
+                                                    <div>
+                                                        <AiOutlineMinus />
+                                                    </div>
+                                                </div>
+                                                <div className='w-full flex justify-center mx-6 ab'>{item.quantity} <span className='pl-[2px]'>шт</span> </div>
+                                                <div className='text-2xl hover:shadow-xl p-[0.45rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center select-none' onClick={() => handleIncreaseQuantity(item)}>
+                                                    <div>
+                                                        <AiOutlinePlus />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
                             </div>
                         </div>
 
-                        <div className='flex-col ml-6 bg-white justify-center w=1/4 rounded-2xl'>
+                        <div className='flex-col ml-6 bg-white justify-center w=1/4 rounded-2xl mt-4 '>
 
                             <div className='p-4'>
                                 <div>
@@ -127,7 +151,7 @@ const Cart = () => {
                 </div>
             </div>
 
-
+            <Botlane full={false} />
         </div>
     );
 };

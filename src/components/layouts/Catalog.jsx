@@ -3,18 +3,44 @@ import Bread from './Bread';
 import Link from 'next/link';
 import styles from '@/styles/Catalog.module.scss'
 import Image from 'next/image';
-import { MdExpandLess, MdExpandMore } from 'react-icons/md';
-import { AiOutlineSearch, AiOutlineInfoCircle, AiOutlineEye, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
+import { AiOutlineInfoCircle, AiOutlineEye, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { FiShoppingCart } from 'react-icons/fi';
 import userData from './data';
 import { CartContext } from "../contexts/CartContext";
 import { useContext } from 'react';
+import MyFilter from '../UI/MyFilter'
+import Botlane from "./Botlane";
+
 
 
 
 const Catalog = () => {
   const { addToCart, cartItems, changeQuantity, makeTest } = useContext(CartContext);
+
+  const sklads = [
+    { id: 1, name: "Малиновка" },
+    { id: 2, name: "Восток" },
+    { id: 3, name: "Уручье" },
+    { id: 4, name: "Сева" },
+    { id: 5, name: "Инста" },
+    { id: 6, name: "Сити" }
+  ];
+
+  const catalogLinks = [
+    { id: 1, name: 'Каплесборники' },
+    { id: 2, name: 'Крышки' },
+    { id: 3, name: 'Шейкеры' },
+    { id: 4, name: 'Вентиляторы' },
+    { id: 5, name: 'Ручки' },
+    { id: 6, name: 'Трубки' },
+    { id: 7, name: 'Платы' },
+    { id: 8, name: 'Жаровни' },
+    { id: 9, name: 'Панели' },
+    { id: 10, name: 'Клапаны' },
+    { id: 11, name: 'Термостаты' },
+    { id: 12, name: 'Розетки' },
+  ];
 
   const handleIncreaseQuantity = (item) => {
     const newQuantity = item.quantity + 1;
@@ -44,21 +70,21 @@ const Catalog = () => {
           <div className='flex max-lg:hidden'>
             <div className='flex pr-8'>
               <div className='flex bg-gray-100 p-4 rounded-xl border-b-2 border-red-500'>
-                <h2 className='pr-16 '>ТОВАР</h2>
-                <Image src="/depressed_cid.jpg" alt='banner' width={135} height={100} />
+                <h3 className='pr-16 '>Техника</h3>
+                <Image src="/star1.jpg" alt='banner' width={135} height={100} />
               </div>
             </div>
 
             <div className='flex pr-8'>
               <div className='flex bg-gray-100 p-4 rounded-xl border-b-2 border-red-500'>
-                <h2 className='pr-16 '>ТОВАР</h2>
-                <Image src="/depressed_cid.jpg" alt='banner' width={135} height={100} />
+                <h3 className='pr-16 '>Наборы</h3>
+                <Image src="/star2.jpg" alt='banner' width={135} height={100} />
               </div>
             </div>
 
             <div className='flex'>
               <div className='flex bg-gray-100 p-4 rounded-xl border-b-2 border-red-500'>
-                <h2 className='pr-16 '>ТОВАР</h2>
+                <h3 className='pr-16 '>Сырьё</h3>
                 <Image src="/depressed_cid.jpg" alt='banner' width={135} height={100} />
               </div>
             </div>
@@ -66,89 +92,25 @@ const Catalog = () => {
           </div>
 
           <div className='flex mt-6'>
-            <div className='flex min-w-[212px] max-h-[306px]  pl-1 shadow-md max-lg:hidden'>
-              <div className='w-full'>
-                <div className='flex justify-between items-center'>
-                  <span className='text-md font-semibold hover:text-[#5b5e67]'>Склад</span>
-                  <MdExpandLess className='text-[30px] leading-[20px]' />
-                </div>
 
-                <div>
-                  <form className='bg-[#f0eeee] font-medium w-full rounded-md px-1 mt-2 flex justify-start border-transparent border-solid border-2 hover:border-gray-500 transition border-color duration-200 ease-in-out'>
-                    <input
-                      type="text"
-                      placeholder="Я ищу..."
-                      className="bg-[#f0eeee] pl-2 text-md focus:outline-none w-full"
-                    />
+              <div className='flex-col'>
 
-                    <button
-                      type="submit"
-                      className=" text-[20px] text-[#606061]"
-                    >
-                      <AiOutlineSearch />
-                    </button>
-
-                  </form>
-                </div>
-
-                <div className='mt-3'>
-                  <div className='flex items-center py-1 '>
-                    <div className='h-[20px] mr-4 w-[20px] border-[#d8d8dd] border-[1px]  hover:border-[#b5b5b8] rounded-[4.2px] transition-all duration-300'>
-                    </div>
-                    <span className='pl-3'>Малиновка</span>
-                  </div>
-
-                  <div className='flex items-center py-1'>
-                  <div className='h-[20px] mr-4 w-[20px] border-[#d8d8dd] border-[1px]  hover:border-[#b5b5b8] rounded-[4.2px] transition-all duration-300'>
-                                            </div>
-                    <span className='pl-3'>Восток</span>
-                  </div>
-
-                  <div className='flex items-center py-1'>
-                  <div className='h-[20px] mr-4 w-[20px] border-[#d8d8dd] border-[1px]  hover:border-[#b5b5b8] rounded-[4.2px] transition-all duration-300'>
-                                            </div>
-                    <span className='pl-3'>Уручье</span>
-                  </div>
-
-                  <div className='flex items-center py-1'>
-                  <div className='h-[20px] mr-4 w-[20px] border-[#d8d8dd] border-[1px]  hover:border-[#b5b5b8] rounded-[4.2px] transition-all duration-300'>
-                                            </div>
-                    <span className='pl-3'>Сева</span>
-                  </div>
-
-                  <div className='flex items-center py-1'>
-                  <div className='h-[20px] mr-4 w-[20px] border-[#d8d8dd] border-[1px]  hover:border-[#b5b5b8] rounded-[4.2px] transition-all duration-300'>
-                                            </div>
-                    <span className='pl-3'>Инста</span>
-                  </div>
-
-                  <div className='flex items-center py-1'>
-                  <div className='h-[20px] mr-4 w-[20px] border-[#d8d8dd] border-[1px]  hover:border-[#b5b5b8] rounded-[4.2px] transition-all duration-300'>
-                                            </div>
-                    <span className='pl-3'>Сити</span>
-                  </div>
-
-                </div>
-
-                <div className='mb-2'>
-                  <span className='text-[#0a84ff] text-[15px] font-normal hover:text-[#0058a6] cursor-pointer select-none'>Показать все</span>
-                </div>
-
+                <MyFilter catalogLinks={catalogLinks} title='Категория' opened={true}/>
+                <MyFilter catalogLinks={sklads} title='Склад' opened={false} />
 
               </div>
 
-            </div>
 
             <div>
-              <div className='flex ml-8 flex-wrap'>
+              <div className='flex max-lg:justify-center  lg:ml-8 flex-wrap'>
                 {userData.items.map((item, index) => (
                   <div>
                     <div>
 
                       <div className={styles.catalog_item}>
-                        <div key={item.title} className='flex-col w-[205px] h-[323px] hover:shadow-lg p-2 mb-4 mr-5'>
+                        <div key={item.title} className='flex-col w-[205px] h-[323px] hover:shadow-lg p-2 mb-4 lg:mr-5'>
                           <Link href={`/products/${index}`} className='text-inherit no-underline hover:text-inherit hover:no-underline cursor-auto'><div className='relative flex items-center justify-center'>
-                            <Image src={item.imgUrl} alt='banner' width={185} height={150} />
+                            <Image src={item.imgUrl} alt={item.title} width={185} height={150} />
                             <div className={styles.eye}>
                               <AiOutlineEye />
                             </div>
@@ -210,6 +172,8 @@ const Catalog = () => {
           </div>
         </div>
       </div>
+
+      <Botlane full={false} />
     </div>
   );
 }

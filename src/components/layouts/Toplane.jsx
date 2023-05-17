@@ -41,7 +41,7 @@ const Toplane = () => {
         <GiHamburgerMenu /> <span className='ml-2 '>Каталог</span>
       </button>
 
-      <form onSubmit={handleSearchSubmit} className=' bg-[#f4f4f4] font-medium w-full max-w-[600px] rounded-xl px-2 py-1 ml-4 flex justify-start border-transparent border-solid border-2 hover:border-gray-500 transition border-color duration-200 ease-in-out'>
+      <form onSubmit={handleSearchSubmit} className=' bg-[#f4f4f4] font-medium w-full max-w-[600px] max-md:w-[500px] max-sm:w-[400px] rounded-xl px-2 py-1 ml-4 flex justify-start border-transparent border-solid border-2 hover:border-gray-500 transition border-color duration-200 ease-in-out'>
         <button
           type="submit"
           className=" text-[28px] text-[#9b9b9c]"

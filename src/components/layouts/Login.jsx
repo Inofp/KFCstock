@@ -9,7 +9,7 @@ const LoginPage = () => {
 
   const handleClick = (e) => {
     e.preventDefault()
-    router.push('/home')
+    router.push('/catalog')
   }
 
   return (

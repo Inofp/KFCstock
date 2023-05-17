@@ -36,7 +36,7 @@ const Product = ({ product }) => {
   return (
     <div className="w-full min-h-full flex justify-center">
       <div className="w-[1200px] max-lg:w-[600px] max-sm:w-[350px] ">
-        <div className=" max-lg:flex max-lg:flex-col max-lg:justify-center max-lg:items-center">
+        <div className=" max-lg:flex max-lg:flex-col max-lg:mb-28 max-lg:justify-center max-lg:items-center">
           <div className="mt-3">
             <Toplane />
             <Bread />
@@ -48,7 +48,7 @@ const Product = ({ product }) => {
 
           <h2 className="font-bold mt-4">{title}</h2>
 
-          <div className="flex max-lg:flex-col">
+          <div className="flex max-lg:flex-col max-lg:items-center">
             <div><Image src={imgUrl} alt="product pic" width={430} height={430} /></div>
 
             <div className="flex-col mt-3 mx-6">
@@ -90,7 +90,7 @@ const Product = ({ product }) => {
               </div>
             </div>
 
-            <div className="flex-col lg:ml-20 max-lg:w-[300px]">
+            <div className="flex-col lg:ml-20  max-lg:w-full max-lg:items-center max-lg:justify-center max-lg:flex">
               <div className="flex">
                 <div className="max-lg:my-4 flex items-center justify-center text-[#b5b5b8] hover:text-inherit transition-colors duration-200 cursor-pointer mr-7">
                   <div className="text-2xl pr-1">
@@ -106,7 +106,7 @@ const Product = ({ product }) => {
                 </div>
               </div>
 
-              <div className="shadow-md p-[20px] rounded-md flex-col items-center justify-center mt-4">
+              <div className="shadow-md p-[20px] rounded-md flex-col items-center justify-center mt-4 max-lg:w-[300px]">
                 <h5>Малиновка</h5>
 
                 {cartItems.find(cartItem => cartItem.id === product.id) ? (
@@ -135,7 +135,7 @@ const Product = ({ product }) => {
           </div>
         </div>
       </div>
-      <Botlane />
+      <Botlane full={true} />
     </div>
   );
 };

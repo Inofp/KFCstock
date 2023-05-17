@@ -9,7 +9,7 @@ const Header: FC = () => {
 
   return (
     <header className={ pathname != '/' ? styles.header__active : styles.header}>
-      <Link href="/home" className="p-1">
+      <Link href="/catalog" className="p-1">
         <Image src="/kfc_logo.svg.png" alt='logo' width={95} height={95} />
       </Link>
 

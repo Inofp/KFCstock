@@ -35,7 +35,7 @@ const Toplane = () => {
 
   return (
     <div className='flex items-center justify-center max-lg:flex-col'>
-      <Link href="/home" className='max-lg:my-5'><Image src="/logo.svg" alt='logo-pic' width={135} height={100} /></Link>
+      <Link href="/catalog" className='max-lg:my-5'><Image src="/logo.svg" alt='logo-pic' width={135} height={100} /></Link>
 
       <button className='max-lg:hidden bg-red-500 text-white p-[11px] pr-[22px] rounded-xl flex justify-center items-center ml-6 font-medium text-base' onClick={handleClick}>
         <GiHamburgerMenu /> <span className='ml-2 '>Каталог</span>

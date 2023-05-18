@@ -53,7 +53,7 @@ const Catalog = () => {
   };
 
   return (
-    <div className="w-full min-h-full flex justify-center overflow-auto">
+    <div className="w-full min-h-full flex justify-center overflow-auto max-lg:pb-24 max-sm:pb-44">
       <div className="w-[1200px] max-lg:w-[650px] max-md:w-[510px] max-sm:w-[450px]">
         <div className='max-lg:flex max-lg:flex-col max-lg:items-center max-lg:justify-center'>
           <div className='mt-3'>

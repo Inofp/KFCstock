@@ -34,7 +34,7 @@ const Cart = () => {
 
 
     return (
-        <div className="w-full min-h-full flex-col justify-center">
+        <div className="w-full min-h-full flex-col justify-center max-sm:pb-44">
             <div className='py-4'>
                 <Toplane />
             </div>

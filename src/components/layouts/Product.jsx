@@ -34,7 +34,7 @@ const Product = ({ product }) => {
   }
 
   return (
-    <div className="w-full min-h-full flex justify-center">
+    <div className="w-full min-h-full flex justify-center max-sm:pb-44">
       <div className="w-[1200px] max-lg:w-[600px] max-sm:w-[350px] ">
         <div className=" max-lg:flex max-lg:flex-col max-lg:mb-28 max-lg:justify-center max-lg:items-center">
           <div className="mt-3">

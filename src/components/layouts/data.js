@@ -103,7 +103,7 @@ const userData = {
       id: 0,
       title: "Тепловой шкаф henny penny",
       description: "Холодосы",
-      imgUrl: "/holodos.jpg",
+      imgUrl: "/sEtHOlWZlWY.jpg",
       quantity: 1,
     },
     {
@@ -117,7 +117,7 @@ const userData = {
       id: 2,
       title: "Тостер вертикальный prince castle",
       description: "Тостеры",
-      imgUrl: "/holodos.jpg",
+      imgUrl: "/XMC1qZgMBWY.jpg",
       quantity: 1,
     },
     {

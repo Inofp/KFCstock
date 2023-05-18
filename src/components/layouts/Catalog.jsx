@@ -69,9 +69,9 @@ const Catalog = () => {
 
           <div className='flex max-lg:hidden'>
             <div className='flex pr-8'>
-              <div className='flex bg-gray-100 p-4 rounded-xl border-b-2 border-red-500'>
+              <div className='flex bg-gray-100 p-4 rounded-xl border-b-2 border-red-500 '>
                 <h3 className='pr-16 '>Техника</h3>
-                <Image src="/star1.jpg" alt='banner' width={135} height={100} />
+                <Image src="/retsept-SHefburger8.jpg" className='rounded-xl' alt='banner' width={135} height={100} />
               </div>
             </div>
 
@@ -109,7 +109,7 @@ const Catalog = () => {
 
                       <div className={styles.catalog_item}>
                         <div key={item.title} className='flex-col w-[205px] h-[323px] hover:shadow-lg p-2 mb-4 lg:mr-5'>
-                          <Link href={`/products/${index}`} className='text-inherit no-underline hover:text-inherit hover:no-underline cursor-auto'><div className='relative flex items-center justify-center'>
+                          <Link href={`/products/${index}`} className='w-[200px] h-[200px] text-inherit no-underline hover:text-inherit hover:no-underline cursor-auto'><div className='relative flex items-center justify-center'>
                             <Image src={item.imgUrl} alt={item.title} width={185} height={150} />
                             <div className={styles.eye}>
                               <AiOutlineEye />

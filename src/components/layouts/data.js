@@ -103,7 +103,7 @@ const userData = {
       id: 0,
       title: "Тепловой шкаф henny penny",
       description: "Холодосы",
-      imgUrl: "/sEtHOlWZlWY.jpg",
+      imgUrl: "/holodos.jpg",
       quantity: 1,
     },
     {

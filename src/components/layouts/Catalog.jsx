@@ -71,7 +71,7 @@ const Catalog = () => {
             <div className='flex pr-8'>
               <div className='flex bg-gray-100 p-4 rounded-xl border-b-2 border-red-500 '>
                 <h3 className='pr-16 '>Техника</h3>
-                <Image src="/retsept-SHefburger8.jpg" className='rounded-xl' alt='banner' width={135} height={100} />
+                <Image src="/star1.jpg" className='rounded-xl' alt='banner' width={135} height={100} />
               </div>
             </div>
 

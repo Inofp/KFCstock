@@ -117,7 +117,7 @@ const userData = {
       id: 2,
       title: "Тостер вертикальный prince castle",
       description: "Тостеры",
-      imgUrl: "/XMC1qZgMBWY.jpg",
+      imgUrl: "/holodos.jpg",
       quantity: 1,
     },
     {

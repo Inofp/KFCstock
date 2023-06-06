@@ -25,31 +25,28 @@ export const FavoriteProvider = ({ children }) => {
     console.log('Add to favorites:', productId, user);
     setFavorites((prevFavorites) => [...(prevFavorites || []), productId]);
 
-    // Отправляем запрос на сервер, чтобы добавить товар в избранное
     const response = await fetch('/api/favorites', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: user.id, productId }),
     });
 
-    // Обрабатываем возможные ошибки
     if (!response.ok) {
       throw new Error('Failed to add to favorites');
     }
   };
 
+  
   const removeFromFavorites = async (productId) => {
     console.log('Remove from favorites:', productId, user);
     setFavorites((prevFavorites) => prevFavorites.filter(id => id !== productId));
 
-    // Отправляем запрос на сервер, чтобы удалить товар из избранного
     const response = await fetch('/api/favorites', {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ userId: user.id, productId }),
     });
 
-    // Обрабатываем возможные ошибки
     if (!response.ok) {
       throw new Error('Failed to remove from favorites');
     }

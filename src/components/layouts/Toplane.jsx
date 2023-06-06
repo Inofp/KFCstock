@@ -9,11 +9,13 @@ import { useContext, useState } from 'react'
 import Link from 'next/link';
 import { CartContext } from "../contexts/CartContext";
 import MyPopup from '../UI/MyPopup';
+import { FavoriteContext } from '../contexts/FavoriteContext'
 
 const Toplane = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const { cartItems } = useContext(CartContext);
-
+  const { favorites } = useContext(FavoriteContext);
+  const favoritesCount = favorites.length;
 
   const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
@@ -23,7 +25,7 @@ const Toplane = () => {
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    
+
   };
 
   const router = useRouter();
@@ -60,7 +62,7 @@ const Toplane = () => {
       </form>
 
       <div className='flex justify-between items-center ml-1 max-lg:hidden'>
-        <MyPopup title={'Серёга'} data={['История заказов', 'Избранное', 'Выйти']} />
+        <MyPopup title={'Серёга'} data={[`История заказов`, `Избранное (${favoritesCount})`, `Выйти`]} />
 
         <div className='px-3 flex flex-col items-center justify-center cursor-pointer hover:shadow-md rounded-xl select-none'>
           <div className='text-2xl'><MdOutlineFavoriteBorder /></div>
@@ -70,14 +72,14 @@ const Toplane = () => {
         <Link href='/cart' className='text-decoration-none text-inherit hover:text-inherit'>
           <div className='px-3 flex flex-col items-center justify-center cursor-pointer hover:shadow-md rounded-xl relative select-none'>
             <div className='text-2xl' >
-            <div className={`${totalQuantity === 0 ? 'hidden' : 'absolute text -top-3 z-1000 right-5 bg-[#ff3b30] text-[0.7rem] font-medium h-[20px] text-white flex justify-center items-center px-[6.3px] rounded-full'}`}>
+              <div className={`${totalQuantity === 0 ? 'hidden' : 'absolute text -top-3 z-1000 right-5 bg-[#ff3b30] text-[0.7rem] font-medium h-[20px] text-white flex justify-center items-center px-[6.3px] rounded-full'}`}>
 
-              {totalQuantity}
+                {totalQuantity}
               </div>
               <FiShoppingCart />
             </div>
             <span >Корзина</span>
-            
+
           </div>
         </Link>
 

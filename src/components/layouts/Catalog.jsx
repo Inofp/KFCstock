@@ -15,7 +15,7 @@ import { FavoriteContext } from '../contexts/FavoriteContext'
 
 const Catalog = () => {
   const { addToCart, cartItems, changeQuantity, makeTest } = useContext(CartContext);
-  const { favorites, addToFavorites } = useContext(FavoriteContext);
+  const { favorites, addToFavorites, removeFromFavorites } = useContext(FavoriteContext);
   const sklads = [
     { id: 1, name: "Малиновка" },
     { id: 2, name: "Восток" },
@@ -150,7 +150,13 @@ const Catalog = () => {
                                 </button>
                                 <div className='px-3  flex'>
                                   <div className='text-2xl pr-4 text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'><AiOutlineInfoCircle className='cursor-pointer' /></div>
-                                  <div onClick={() => addToFavorites(item.id)} className='text-2xl text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'>
+                                  <div onClick={() => {
+                                    if (favorites?.includes(item.id)) {
+                                      removeFromFavorites(item.id);
+                                    } else {
+                                      addToFavorites(item.id);
+                                    }
+                                  }} className='text-2xl text-[#b5b5b8] cursor-pointer transition-colors duration-200 no-underline hover:text-inherit'>
                                     {favorites?.includes(item.id) ? <MdOutlineFavorite className='text-red-600' /> : <MdOutlineFavoriteBorder />}
                                   </div>
                                 </div>

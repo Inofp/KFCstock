@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     const uri = process.env.MONGODB_URI;
+    console.log(process.env.MONGODB_URI);
     const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
     
     try {

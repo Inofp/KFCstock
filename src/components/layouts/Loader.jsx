@@ -21,5 +21,5 @@ export default function Loader() {
     };
   }, [router]);
 
-  return loading && <LoadingSpinner />;
+  return loading ? <LoadingSpinner /> : null;
 }

@@ -8,7 +8,7 @@ import Image from 'next/image';
 import { useContext, useState } from 'react'
 import Link from 'next/link';
 import { CartContext } from "../contexts/CartContext";
-import Cookies from 'js-cookie';
+import MyPopup from '../UI/MyPopup';
 
 const Toplane = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -23,19 +23,19 @@ const Toplane = () => {
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-    // Добавьте здесь обработчик для отправки запроса поиска на сервер
+    
   };
 
   const router = useRouter();
 
   const handleClick = (e) => {
     e.preventDefault()
-    router.push('/catalog')
+    router.push('/')
   }
 
   return (
     <div className='flex items-center justify-center max-lg:flex-col'>
-      <Link href="/catalog" className='max-lg:my-5'><Image src="/logo.svg" alt='logo-pic' width={135} height={100} /></Link>
+      <Link href="/" className='max-lg:my-5'><Image src="/logo.svg" alt='logo-pic' width={135} height={100} /></Link>
 
       <button className='max-lg:hidden bg-red-500 text-white p-[11px] pr-[22px] rounded-xl flex justify-center items-center ml-6 font-medium text-base' onClick={handleClick}>
         <GiHamburgerMenu /> <span className='ml-2 '>Каталог</span>
@@ -60,10 +60,7 @@ const Toplane = () => {
       </form>
 
       <div className='flex justify-between items-center ml-1 max-lg:hidden'>
-        <div className='px-3 flex flex-col items-center justify-center cursor-pointer hover:shadow-md rounded-xl select-none'>
-          <div className='text-2xl'><BiUser /></div>
-          <span>Серёга</span>
-        </div>
+        <MyPopup title={'Серёга'} data={['История заказов', 'Избранное', 'Выйти']} />
 
         <div className='px-3 flex flex-col items-center justify-center cursor-pointer hover:shadow-md rounded-xl select-none'>
           <div className='text-2xl'><MdOutlineFavoriteBorder /></div>

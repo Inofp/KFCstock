@@ -1,12 +1,11 @@
 import Layout from '@/components/layouts/Layout'
-import LoginPage from '../components/layouts/Login';
-
+import Catalog from '../components/layouts/Catalog';
 
 export default function MainPage() {
 
   return (
-    <Layout title='Login'>
-      <LoginPage />
+    <Layout title='Catalog'>
+      <Catalog />
     </Layout>
   )
 

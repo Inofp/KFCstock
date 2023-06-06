@@ -23,7 +23,7 @@ export const getServerSideProps = async (context) => {
 
 const PrudoctPage = ({ product }) => {
     return (
-        <Layout title='Catalog'>
+        <Layout title={product.title}>
             <Product product={product} />
         </Layout>
 

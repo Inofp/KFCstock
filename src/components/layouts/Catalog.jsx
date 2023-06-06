@@ -4,20 +4,18 @@ import Link from 'next/link';
 import styles from '@/styles/Catalog.module.scss'
 import Image from 'next/image';
 import { AiOutlineInfoCircle, AiOutlineEye, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { MdOutlineFavoriteBorder } from 'react-icons/md';
+import { MdOutlineFavorite, MdOutlineFavoriteBorder } from 'react-icons/md';
 import { FiShoppingCart } from 'react-icons/fi';
 import userData from './data';
 import { CartContext } from "../contexts/CartContext";
 import { useContext } from 'react';
 import MyFilter from '../UI/MyFilter'
 import Botlane from "./Botlane";
-
-
-
+import { FavoriteContext } from '../contexts/FavoriteContext'
 
 const Catalog = () => {
   const { addToCart, cartItems, changeQuantity, makeTest } = useContext(CartContext);
-
+  const { favorites, addToFavorites } = useContext(FavoriteContext);
   const sklads = [
     { id: 1, name: "Малиновка" },
     { id: 2, name: "Восток" },
@@ -51,6 +49,8 @@ const Catalog = () => {
     const newQuantity = item.quantity - 1;
     changeQuantity(item, newQuantity);
   };
+
+
 
   return (
     <div className="w-full min-h-full flex justify-center overflow-auto max-lg:pb-24 max-sm:pb-44">
@@ -93,12 +93,12 @@ const Catalog = () => {
 
           <div className='flex mt-6'>
 
-              <div className='flex-col'>
+            <div className='flex-col'>
 
-                <MyFilter catalogLinks={catalogLinks} title='Категория' opened={true}/>
-                <MyFilter catalogLinks={sklads} title='Склад' opened={false} />
+              <MyFilter catalogLinks={catalogLinks} title='Категория' opened={true} />
+              <MyFilter catalogLinks={sklads} title='Склад' opened={false} />
 
-              </div>
+            </div>
 
 
             <div>
@@ -150,7 +150,9 @@ const Catalog = () => {
                                 </button>
                                 <div className='px-3  flex'>
                                   <div className='text-2xl pr-4 text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'><AiOutlineInfoCircle className='cursor-pointer' /></div>
-                                  <div className='text-2xl text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'><MdOutlineFavoriteBorder className='cursor-pointer' /></div>
+                                  <div onClick={() => addToFavorites(item.id)} className='text-2xl text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'>
+                                    {favorites?.includes(item.id) ? <MdOutlineFavorite className='text-red-600' /> : <MdOutlineFavoriteBorder />}
+                                  </div>
                                 </div>
                               </div>
                             )}

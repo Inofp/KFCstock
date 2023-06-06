@@ -6,15 +6,12 @@ const CartContextProvider = ({ children }) => {
   const ls = typeof window !== "undefined" ? window.localStorage : null;
   const [cartItems, setCartItems] = useState([]);
 
-  // время жизни корзины в миллисекундах (3 часа)
-  const expirationTime = 3 * 60 * 60 * 1000;
+  const expirationTime = 1000000000;
 
-  // добавление элемента в корзину
   const addToCart = (item) => {
     setCartItems([...cartItems, item]);
   };
 
-  // удаление элемента из корзины
   const removeFromCart = (item) => {
     const newCartItems = cartItems.filter(
       (cartItem) => cartItem.id !== item.id
@@ -22,25 +19,22 @@ const CartContextProvider = ({ children }) => {
     setCartItems(newCartItems);
   };
 
-  // изменение количества элементов в корзине
   const changeQuantity = (item, quantity) => {
-    const index = cartItems.findIndex((cartItem) => cartItem.id === item.id);
-    const newCartItems = [...cartItems];
-    newCartItems[index].quantity = quantity;
+    const newCartItems = cartItems.map(cartItem =>
+      cartItem.id === item.id ? { ...cartItem, quantity } : cartItem
+    );
+  
     setCartItems(newCartItems);
-
+  
     if (quantity === 0) {
       removeFromCart(item);
-      item.quantity = 1;
     }
   };
 
-  // тестовая функция
   const makeTest = (item, quantity) => {
     console.log(cartItems);
   };
 
-  // сохранение состояния корзины в localStorage
   useEffect(() => {
     const now = new Date().getTime();
     if (cartItems?.length > 0) {
@@ -49,7 +43,6 @@ const CartContextProvider = ({ children }) => {
     }
   }, [cartItems]);
 
-  // удаление данных из localStorage при истечении срока действия
   useEffect(() => {
     const expiration = ls?.getItem("cartExpiration");
     const now = new Date().getTime();
@@ -59,7 +52,6 @@ const CartContextProvider = ({ children }) => {
     }
   }, []);
 
-  // получение состояния корзины из localStorage при монтировании компонента
   useEffect(() => {
     if (ls && ls.getItem("cart")) {
       setCartItems(JSON.parse(ls.getItem("cart")));

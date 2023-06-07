@@ -10,7 +10,26 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const token = Cookies.get('accessToken');
-    if(token) setIsAuthenticated(true);
+    console.log('Check 1');
+    if (token) {
+      console.log('Check 2');
+      axios.get('/api/user', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      }).then(response => {
+        console.log('Check 3');
+        const user = response.data;
+        setUser(user);
+        setIsAuthenticated(true);
+      }).catch(err => {
+        console.error(err);
+        setIsAuthenticated(false);
+        setUser(null);
+        Cookies.remove('accessToken');
+        Cookies.remove('refreshToken');
+      });
+    }
   }, []);
 
   const login = async (login, password) => {   

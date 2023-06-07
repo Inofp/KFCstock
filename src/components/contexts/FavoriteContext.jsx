@@ -18,7 +18,9 @@ export const FavoriteProvider = ({ children }) => {
       }
     };
 
-    loadFavorites();
+    if (user) {
+      loadFavorites();
+    }
   }, [user]);
 
   const addToFavorites = async (productId) => {

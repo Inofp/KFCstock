@@ -1,21 +1,23 @@
 import Toplane from './Toplane';
 import Bread from './Bread';
 import Link from 'next/link';
-import styles from '@/styles/Catalog.module.scss'
+import styles from '@/styles/Catalog.module.scss';
 import Image from 'next/image';
 import { AiOutlineInfoCircle, AiOutlineEye, AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { MdOutlineFavorite, MdOutlineFavoriteBorder } from 'react-icons/md';
 import { FiShoppingCart } from 'react-icons/fi';
 import userData from './data';
-import { CartContext } from "../contexts/CartContext";
-import { useContext } from 'react';
-import MyFilter from '../UI/MyFilter'
+import MyFilter from '../UI/MyFilter';
 import Botlane from "./Botlane";
-import { FavoriteContext } from '../contexts/FavoriteContext'
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, increaseQuantity, decreaseQuantity } from '../../redux/cartSlice';
+import { addToFavorites, removeFromFavorites } from '../../redux/favoritesSlice';
 
 const Catalog = () => {
-  const { addToCart, cartItems, changeQuantity, makeTest } = useContext(CartContext);
-  const { favorites, addToFavorites, removeFromFavorites } = useContext(FavoriteContext);
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart);
+  const favorites = useSelector((state) => state.favorites.favorites);
+
   const sklads = [
     { id: 1, name: "Малиновка" },
     { id: 2, name: "Восток" },
@@ -41,16 +43,17 @@ const Catalog = () => {
   ];
 
   const handleIncreaseQuantity = (item) => {
-    const newQuantity = item.quantity + 1;
-    changeQuantity(item, newQuantity);
+    dispatch(increaseQuantity(item));
   };
 
   const handleDecreaseQuantity = (item) => {
-    const newQuantity = item.quantity - 1;
-    changeQuantity(item, newQuantity);
+    dispatch(decreaseQuantity(item));
   };
+  
 
-
+  const makeTest = () => {
+    console.log(cartItems);
+  }
 
   return (
     <div className="w-full min-h-full flex justify-center overflow-auto max-lg:pb-24 max-sm:pb-44">
@@ -104,7 +107,7 @@ const Catalog = () => {
             <div>
               <div className='flex max-lg:justify-center  lg:ml-8 flex-wrap'>
                 {userData.items.map((item, index) => (
-                  <div>
+                  <div key={item.id}>
                     <div>
 
                       <div className={styles.catalog_item}>
@@ -118,17 +121,20 @@ const Catalog = () => {
                             <div className='cursor-pointer text-[15px] h-[35px] pt-2'><span>{item.title}</span></div>
                             <div className=' text-gray-700 pb-1 pt-4 text-[13px]'><span>{item.description}</span></div>
                           </Link>
+
                           <div className='mb-1'>
                             {cartItems.find(cartItem => cartItem.id === item.id) ? (
                               cartItems.map((cartItem) => {
                                 if (cartItem.id === item.id) {
                                   return (
                                     <div key={cartItem.id} className='flex h-[37px] justify-between items-center mb-0 shadow-md rounded-xl z-10000 '>
-                                      <div className='text-2xl hover:shadow-xl p-[0.45rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center select-none' onClick={() => handleDecreaseQuantity(cartItem)}>
-                                        <div>
-                                          <AiOutlineMinus />
+                                      {cartItem.quantity > 0 && (
+                                        <div className='text-2xl hover:shadow-xl p-[0.45rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center select-none' onClick={() => handleDecreaseQuantity(cartItem)}>
+                                          <div>
+                                            <AiOutlineMinus />
+                                          </div>
                                         </div>
-                                      </div>
+                                      )}
                                       <div className='w-full flex justify-center'>{cartItem.quantity}</div>
                                       <div className='text-2xl hover:shadow-xl p-[0.45rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center select-none' onClick={() => handleIncreaseQuantity(cartItem)}>
                                         <div>
@@ -137,13 +143,13 @@ const Catalog = () => {
                                       </div>
                                     </div>
                                   )
-                                } else {
-                                  return null
                                 }
                               })
                             ) : (
                               <div className='flex h-[34px] justify-between mb-2'>
-                                <button className='bg-red-400 rounded-md px-[15px] w-1/2 hover:bg-red-500 transition duration-300 ease-in-out' onClick={() => addToCart(item)}>
+                                <button className='bg-red-400 rounded-md px-[15px] w-1/2 hover:bg-red-500 transition duration-300 ease-in-out'
+                                  onClick={() => dispatch(addToCart(item))}
+                                >
                                   <div className='flex flex-col items-center justify-center cursor-pointer'>
                                     <div className='text-2xl text-white'><FiShoppingCart fontSize="0.85em" /></div>
                                   </div>
@@ -152,9 +158,9 @@ const Catalog = () => {
                                   <div className='text-2xl pr-4 text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'><AiOutlineInfoCircle className='cursor-pointer' /></div>
                                   <div onClick={() => {
                                     if (favorites?.includes(item.id)) {
-                                      removeFromFavorites(item.id);
+                                      dispatch(removeFromFavorites(item.id));
                                     } else {
-                                      addToFavorites(item.id);
+                                      dispatch(addToFavorites(item.id));
                                     }
                                   }} className='text-2xl text-[#b5b5b8] cursor-pointer transition-colors duration-200 no-underline hover:text-inherit'>
                                     {favorites?.includes(item.id) ? <MdOutlineFavorite className='text-red-600' /> : <MdOutlineFavoriteBorder />}
@@ -167,9 +173,9 @@ const Catalog = () => {
                         </div>
                       </div>
 
-                      {/* <button onClick={() => makeTest(item)}>
+                      <button onClick={() => makeTest()}>
                         Test
-                      </button> */}
+                      </button>
                     </div>
                   </div>
                 ))}
@@ -186,4 +192,4 @@ const Catalog = () => {
   );
 }
 
-export default Catalog
+export default Catalog;

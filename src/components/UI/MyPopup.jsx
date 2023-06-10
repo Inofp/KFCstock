@@ -1,11 +1,16 @@
 import Link from 'next/link';
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { BiUser } from 'react-icons/bi';
-import { AuthContext } from '../contexts/AuthContext'; // Импортируйте свой контекст AuthContext
+import { logout } from '../../redux/authSlice';
+import { useDispatch } from 'react-redux';
 
 const MyPopup = ({ data, title }) => {
   const [isHovered, setHovered] = useState(false);
-  const { logout } = useContext(AuthContext); // Добавьте logout из вашего AuthContext
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <div
@@ -23,7 +28,7 @@ const MyPopup = ({ data, title }) => {
                 return (
                   <button
                     key={index}
-                    onClick={logout}
+                    onClick={handleLogout}
                     className='block w-full text-left px-4  py-2 text-black no-underline hover:bg-gray-200'
                   >
                     {item}

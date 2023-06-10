@@ -5,19 +5,13 @@ import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { FiShoppingCart } from 'react-icons/fi';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link';
-import { CartContext } from "../contexts/CartContext";
 import MyPopup from '../UI/MyPopup';
-import { FavoriteContext } from '../contexts/FavoriteContext'
+import { useSelector } from 'react-redux';
 
 const Toplane = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const { cartItems } = useContext(CartContext);
-  const { favorites } = useContext(FavoriteContext);
-  const favoritesCount = favorites.length;
-
-  const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
@@ -25,7 +19,6 @@ const Toplane = () => {
 
   const handleSearchSubmit = (event) => {
     event.preventDefault();
-
   };
 
   const router = useRouter();
@@ -34,6 +27,12 @@ const Toplane = () => {
     e.preventDefault()
     router.push('/')
   }
+
+  const cartItems = useSelector((state) => state.cart); 
+  const favorites = useSelector((state) => state.favorites.favorites); 
+
+  const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const favoritesCount = favorites.length;
 
   return (
     <div className='flex items-center justify-center max-lg:flex-col'>

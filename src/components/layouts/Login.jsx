@@ -1,26 +1,24 @@
 import styles from "@/styles/Login.module.scss";
-import React, { useState, useContext } from 'react';
-import { useRouter } from 'next/router';
-import { AuthContext } from '../contexts/AuthContext';
-import axios from 'axios';
-import { useEffect } from 'react';
-import Cookies from 'js-cookie';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { login } from '../../redux/authSlice';
+import { useDispatch } from 'react-redux';
+import { login, registerUser } from '../../redux/authSlice';
 
 const LoginPage = () => {
-  const { login } = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerForm, setRegisterForm] = useState(false);
-  const router = useRouter();
+  // const authState = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
 
   const handleLogin = async (event) => {
     event.preventDefault();
   
     try {
-      await login(username, password);
+      await dispatch(login({ username, password }));
       router.push('/');
     } catch (error) {
       alert('Invalid login or password');
@@ -31,15 +29,15 @@ const LoginPage = () => {
     event.preventDefault();
 
     try {
-      const response = await axios.post('/api/register', {
+      const action = await dispatch(registerUser({
         login: registerUsername,
         password: registerPassword
-      });
-
-      if (response.data.success) {
+      }));
+      
+      if (action.payload?.success) {
         alert('User created, you can now login');
       } else {
-        alert(`Error creating user: ${response.data.message}`);
+        alert(`Error creating user: ${action.payload?.message || 'Unknown error'}`);
       }
     } catch (error) {
       alert(`Error creating user: ${error.message}`);
@@ -52,14 +50,6 @@ const LoginPage = () => {
     setRegisterUsername('');
     setRegisterPassword('');
   }
-
-  useEffect(() => {
-    const token = Cookies.get('accessToken');
-
-    if (token) {
-      router.push('/'); 
-    }
-  }, [router]);
 
   return (
     <div className={styles['login-container']}>

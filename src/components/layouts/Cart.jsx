@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 import MyDropDown from '../UI/MyDropDown';
 import Link from 'next/link';
-import { CartContext } from "../contexts/CartContext";
-import { useContext } from 'react';
 import Image from 'next/image';
 import Toplane from './Toplane';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import Botlane from "./Botlane";
-
+import { useDispatch, useSelector } from 'react-redux';
+import { increaseQuantity, decreaseQuantity } from '../../redux/cartSlice';
 
 const Cart = () => {
+    const dispatch = useDispatch();
+    const cartItems = useSelector((state) => state.cart);
+
+    const handleIncreaseQuantity = (item) => {
+        dispatch(increaseQuantity(item));
+    };
+
+    const handleDecreaseQuantity = (item) => {
+        dispatch(decreaseQuantity(item));
+    };
+
     const [selectedTu, setSelectedTu] = useState(null);
     const tus = ['Арнольд', 'Хельга', 'Семён'];
 
@@ -18,18 +28,6 @@ const Cart = () => {
 
     const [selectedRest, setSelectedRest] = useState(null);
     const Rests = ['Центральный', 'Восточный', 'Звёздный'];
-
-    const { addToCart, cartItems, changeQuantity, makeTest } = useContext(CartContext);
-
-    const handleIncreaseQuantity = (item) => {
-        const newQuantity = item.quantity + 1;
-        changeQuantity(item, newQuantity);
-      };
-    
-      const handleDecreaseQuantity = (item) => {
-        const newQuantity = item.quantity - 1;
-        changeQuantity(item, newQuantity);
-      };
 
 
 

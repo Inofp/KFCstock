@@ -4,33 +4,27 @@ import { ObjectId } from 'mongodb';
 export default async function handler(req, res) {
   const uri = process.env.MONGODB_URI;
   const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+  await client.connect();
+  const collection = client.db('kfc').collection('users');
+  const productId = req.body.productId;
+  const userId = new ObjectId(req.body.userId);
 
   if (req.method === 'POST') {
-    const productId = req.body.productId;
-    const userId = new ObjectId(req.body.userId);
-
+    
     try {
-      await client.connect();
-      const collection = client.db('kfc').collection('users');
-
-      await collection.updateOne({ _id: new ObjectId(userId) }, { $push: { favorites: productId } });
+      await collection.updateOne({ _id: userId }, { $push: { favorites: Number(productId) } });
 
       res.status(200).json({ success: true, message: 'Product added to favorites' });
     } catch (error) {
       res.status(500).json({ success: false, message: 'Internal server error' });
     } finally {
+      
       await client.close();
     }
   } else if (req.method === 'DELETE') {
-    const productId = req.body.productId;
-    const userId = new ObjectId(req.body.userId);
 
     try {
-      await client.connect();
-      const collection = client.db('kfc').collection('users');
-
-      await collection.updateOne({ _id: new ObjectId(userId) }, { $pull: { favorites: productId } });
-
+      await collection.updateOne({ _id: userId }, { $pull: { favorites: Number(productId) } });
       res.status(200).json({ success: true, message: 'Product removed from favorites' });
     } catch (error) {
       res.status(500).json({ success: false, message: 'Internal server error' });
@@ -41,9 +35,6 @@ export default async function handler(req, res) {
     const userId = req.query.userId; 
   
     try {
-      await client.connect();
-      const collection = client.db('kfc').collection('users');
-  
       const user = await collection.findOne({ _id: new ObjectId(userId) }); 
   
       if (user) {

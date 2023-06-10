@@ -2,14 +2,12 @@ import Link from "next/link";
 import { MdOutlineFavoriteBorder, MdManageSearch } from "react-icons/md";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
 import { FiShoppingCart } from "react-icons/fi";
-import { BiUser } from "react-icons/bi"
-import { FaHome } from "react-icons/fa"
-import { CartContext } from "../contexts/CartContext";
-import { useContext } from 'react'
-
+import { BiUser } from "react-icons/bi";
+import { FaHome } from "react-icons/fa";
+import { useSelector } from 'react-redux';
 
 const Botlane = ({ full }) => {
-  const { cartItems } = useContext(CartContext);
+  const cartItems = useSelector((state) => state.cart); 
   const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
 
   return (

@@ -4,7 +4,6 @@ import userData from './../../components/layouts/data';
 import Layout from '../../components/layouts/Layout';
 
 export const getServerSideProps = async (context) => {
-    console.log(context);
     const { productId } = context.params;
     const data = userData.items[productId];
 
@@ -21,7 +20,7 @@ export const getServerSideProps = async (context) => {
 
 
 
-const PrudoctPage = ({ product }) => {
+const ProductPage = ({ product }) => {
     return (
         <Layout title={product.title}>
             <Product product={product} />
@@ -30,4 +29,4 @@ const PrudoctPage = ({ product }) => {
     );
 };
 
-export default PrudoctPage;
+export default ProductPage;

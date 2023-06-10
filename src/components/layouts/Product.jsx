@@ -3,26 +3,26 @@ import React from "react";
 import Toplane from "./Toplane";
 import Bread from "./Bread";
 import Breadcrumb from "./Breadcrumb";
-import { MdOutlineFavoriteBorder } from "react-icons/md";
+import { MdOutlineFavorite, MdOutlineFavoriteBorder } from 'react-icons/md';
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import Botlane from "./Botlane";
-import { useContext } from 'react';
-import { CartContext } from "../contexts/CartContext";
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart, increaseQuantity, decreaseQuantity } from '../../redux/cartSlice';
+import { addToFavorites, removeFromFavorites } from '../../redux/favoritesSlice';
 
 const Product = ({ product }) => {
   const { title, description, imgUrl } = product || {};
-
-  const { addToCart, cartItems, changeQuantity, makeTest } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart);
+  const favorites = useSelector((state) => state.favorites.favorites);
 
   const handleIncreaseQuantity = (item) => {
-    const newQuantity = item.quantity + 1;
-    changeQuantity(item, newQuantity);
+    dispatch(increaseQuantity(item));
   };
 
   const handleDecreaseQuantity = (item) => {
-    const newQuantity = item.quantity - 1;
-    changeQuantity(item, newQuantity);
+    dispatch(decreaseQuantity(item));
   };
 
   if (!product) {
@@ -92,9 +92,17 @@ const Product = ({ product }) => {
 
             <div className="flex-col lg:ml-20  max-lg:w-full max-lg:items-center max-lg:justify-center max-lg:flex">
               <div className="flex">
-                <div className="max-lg:my-4 flex items-center justify-center text-[#b5b5b8] hover:text-inherit transition-colors duration-200 cursor-pointer mr-7">
+                <div className="max-lg:my-4 flex items-center justify-center text-[#b5b5b8] hover:text-inherit transition-colors duration-200 cursor-pointer mr-7"
+                  onClick={() => {
+                    if (favorites?.includes(product.id)) {
+                      dispatch(removeFromFavorites(product.id));
+                    } else {
+                      dispatch(addToFavorites(product.id));
+                    }
+                  }}
+                >
                   <div className="text-2xl pr-1">
-                    <MdOutlineFavoriteBorder />
+                    {favorites?.includes(product.id) ? <MdOutlineFavorite className='text-red-600' /> : <MdOutlineFavoriteBorder />}
                   </div>{" "}
                   <span>В избранное</span>
                 </div>
@@ -113,7 +121,7 @@ const Product = ({ product }) => {
                   cartItems.map((cartItem) => {
                     if (cartItem.id === product.id) {
                       return (
-                        <div className='flex h-[34px] justify-between items-center mb-0 shadow-md runded-xl z-10000'>
+                        <div key={cartItem.id} className='flex h-[34px] justify-between items-center mb-0 shadow-md runded-xl z-10000'>
                           <button className='text-2xl hover:shadow-xl p-[0.3rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center' onClick={() => handleDecreaseQuantity(product)}><AiOutlineMinus /></button>
                           <div className='w-full flex justify-center'>{cartItem.quantity}</div>
                           <button className='text-2xl hover:shadow-xl p-[0.3rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center' onClick={() => handleIncreaseQuantity(product)}><AiOutlinePlus /></button>
@@ -124,7 +132,9 @@ const Product = ({ product }) => {
                     }
                   })
                 ) : (
-                  <button className="bg-red-500 text-white p-[12px] px-[31px] mt-4 rounded-xl flex justify-center items-center font-medium text-base" onClick={() => addToCart(product)}>
+                  <button className="bg-red-500 text-white p-[12px] px-[31px] mt-4 rounded-xl flex justify-center items-center font-medium text-base"
+                    onClick={() => dispatch(addToCart(product))}
+                  >
                     <span className="ml-2 font-medium">Добавить в корзину</span>
                   </button>
                 )}

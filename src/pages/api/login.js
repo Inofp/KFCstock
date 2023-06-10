@@ -42,6 +42,7 @@ export default async function handler(req, res) {
         user: {
           id: user._id,
           login: user.login,
+          favorites: user.favorites,
         } 
       });
       

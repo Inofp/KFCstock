@@ -31,8 +31,8 @@ const Toplane = () => {
   const cartItems = useSelector((state) => state.cart); 
   const favorites = useSelector((state) => state.favorites.favorites); 
 
-  const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
-  const favoritesCount = favorites.length;
+  const totalQuantity = cartItems.reduce((total, item) => total + (item ? item.quantity : 0), 0);
+  const favoritesCount = favorites?.length;
 
   return (
     <div className='flex items-center justify-center max-lg:flex-col'>

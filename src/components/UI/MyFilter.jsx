@@ -13,7 +13,7 @@ const MySideBar = ({ catalogLinks, title, opened }) => {
     return (
         <div className={`w-full mb-4 min-w-[212px] max-h-[306px] px-1 max-lg:hidden ${isOpen ? 'shadow-md' : ''}`}>
             <div className='flex justify-between items-center cursor-pointer' onClick={() => setIsOpen(!isOpen)}>
-                <span className='text-md font-semibold hover:text-[#5b5e67]'>{title}</span>
+                <span className='text-md font-semibold hover:text-[#5b5e67] select-none'>{title}</span>
                 <MdExpandMore
                     className={`text-[34px] leading-[20px] text-[#b5b5b8] select-none ${isOpen
                         ? 'transform rotate-180 transition-transform duration-300 ease-in-out'

@@ -16,8 +16,8 @@ import { addToFavorites, removeFromFavorites } from '../../redux/favoritesSlice'
 const Catalog = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart);
-  const favorites = useSelector((state) => state.favorites.favorites);
-
+  const favorites = useSelector((state) => state.favorites);
+  const user = useSelector((state) => state.auth.user);
   const sklads = [
     { id: 1, name: "Малиновка" },
     { id: 2, name: "Восток" },
@@ -43,16 +43,17 @@ const Catalog = () => {
   ];
 
   const handleIncreaseQuantity = (item) => {
-    dispatch(increaseQuantity(item));
+    dispatch(increaseQuantity({ userId: user.id, itemId: item.id }));
   };
 
   const handleDecreaseQuantity = (item) => {
-    dispatch(decreaseQuantity(item));
+    dispatch(decreaseQuantity({ userId: user.id, itemId: item.id }));
   };
   
 
+
   const makeTest = () => {
-    console.log(cartItems);
+    console.log(favorites);
   }
 
   return (
@@ -123,59 +124,63 @@ const Catalog = () => {
                           </Link>
 
                           <div className='mb-1'>
-                            {cartItems.find(cartItem => cartItem.id === item.id) ? (
-                              cartItems.map((cartItem) => {
-                                if (cartItem.id === item.id) {
-                                  return (
-                                    <div key={cartItem.id} className='flex h-[37px] justify-between items-center mb-0 shadow-md rounded-xl z-10000 '>
-                                      {cartItem.quantity > 0 && (
-                                        <div className='text-2xl hover:shadow-xl p-[0.45rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center select-none' onClick={() => handleDecreaseQuantity(cartItem)}>
-                                          <div>
-                                            <AiOutlineMinus />
-                                          </div>
-                                        </div>
-                                      )}
-                                      <div className='w-full flex justify-center'>{cartItem.quantity}</div>
-                                      <div className='text-2xl hover:shadow-xl p-[0.45rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center select-none' onClick={() => handleIncreaseQuantity(cartItem)}>
+                            {(() => {
+                              const cartItem = cartItems.find(cartItem => cartItem && cartItem.id === item.id);
+
+                              if (cartItem) {
+                                return (
+
+                                  <div key={cartItem.id} className='flex h-[37px] justify-between items-center mb-0 shadow-md rounded-xl z-10000 '>
+                                    {cartItem.quantity > 0 && (
+                                      <div className='text-2xl hover:shadow-xl p-[0.45rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center select-none' onClick={() => handleDecreaseQuantity(cartItem)}>
                                         <div>
-                                          <AiOutlinePlus />
+                                          <AiOutlineMinus />
                                         </div>
                                       </div>
+                                    )}
+                                    <div className='w-full flex justify-center'>{cartItem.quantity}</div>
+                                    <div className='text-2xl hover:shadow-xl p-[0.45rem] rounded-md cursor-pointer hover:bg-[#f4f4f4] flex justify-center select-none' onClick={() => handleIncreaseQuantity(cartItem)}>
+                                      <div>
+                                        <AiOutlinePlus />
+                                      </div>
                                     </div>
-                                  )
-                                }
-                              })
-                            ) : (
-                              <div className='flex h-[34px] justify-between mb-2'>
-                                <button className='bg-red-400 rounded-md px-[15px] w-1/2 hover:bg-red-500 transition duration-300 ease-in-out'
-                                  onClick={() => dispatch(addToCart(item))}
-                                >
-                                  <div className='flex flex-col items-center justify-center cursor-pointer'>
-                                    <div className='text-2xl text-white'><FiShoppingCart fontSize="0.85em" /></div>
                                   </div>
-                                </button>
-                                <div className='px-3  flex'>
-                                  <div className='text-2xl pr-4 text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'><AiOutlineInfoCircle className='cursor-pointer' /></div>
-                                  <div onClick={() => {
-                                    if (favorites?.includes(item.id)) {
-                                      dispatch(removeFromFavorites(item.id));
-                                    } else {
-                                      dispatch(addToFavorites(item.id));
-                                    }
-                                  }} className='text-2xl text-[#b5b5b8] cursor-pointer transition-colors duration-200 no-underline hover:text-inherit'>
-                                    {favorites?.includes(item.id) ? <MdOutlineFavorite className='text-red-600' /> : <MdOutlineFavoriteBorder />}
+                                )
+                              } else {
+                                return (
+                                  <div className='flex h-[34px] justify-between mb-2'>
+                                    <button className='bg-red-400 rounded-md px-[15px] w-1/2 hover:bg-red-500 transition duration-300 ease-in-out'
+                                      onClick={() => dispatch(addToCart({ userId: user.id, item }))}
+                                    >
+                                      <div className='flex flex-col items-center justify-center cursor-pointer'>
+                                        <div className='text-2xl text-white'><FiShoppingCart fontSize="0.85em" /></div>
+                                      </div>
+                                    </button>
+                                    <div className='px-3  flex'>
+                                      <button onClick={() => makeTest()}>
+                                        Test
+                                      </button>
+                                      <div className='text-2xl pr-4 text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'><AiOutlineInfoCircle className='cursor-pointer' /></div>
+                                      <div onClick={() => {
+                                        if (favorites?.includes(item.id)) {
+                                          dispatch(removeFromFavorites({ userId: user.id, productId: item.id }));
+                                        } else {
+                                          dispatch(addToFavorites({ userId: user.id, productId: item.id }));
+                                        }
+                                      }} className='text-2xl text-[#b5b5b8] cursor-pointer transition-colors duration-200 no-underline hover:text-inherit'>
+                                        {favorites?.includes(item.id) ? <MdOutlineFavorite className='text-red-600' /> : <MdOutlineFavoriteBorder />}
+                                      </div>
+                                    </div>
                                   </div>
-                                </div>
-                              </div>
-                            )}
+                                )
+                              }
+                            })()}
                           </div>
 
                         </div>
                       </div>
 
-                      <button onClick={() => makeTest()}>
-                        Test
-                      </button>
+
                     </div>
                   </div>
                 ))}

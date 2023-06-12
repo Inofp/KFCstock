@@ -1,8 +1,8 @@
 import styles from "@/styles/Login.module.scss";
-import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../../redux/authSlice';
 import { useDispatch } from 'react-redux';
 import { login, registerUser } from '../../redux/authSlice';
+import { useState } from "react";
+import { useRouter } from 'next/router';
 
 const LoginPage = () => {
   const [username, setUsername] = useState('');
@@ -10,35 +10,37 @@ const LoginPage = () => {
   const [registerUsername, setRegisterUsername] = useState('');
   const [registerPassword, setRegisterPassword] = useState('');
   const [registerForm, setRegisterForm] = useState(false);
-  // const authState = useSelector((state) => state.auth);
-
+  const Router = useRouter();
   const dispatch = useDispatch();
 
   const handleLogin = async (event) => {
     event.preventDefault();
   
     try {
-      await dispatch(login({ username, password }));
-      router.push('/');
+      const result = await dispatch(login({ login: username, password }));
+      if ('error' in result) {
+        alert('Invalid login or password');
+      } else {
+        Router.push('/');
+      }
     } catch (error) {
-      alert('Invalid login or password');
+      alert('An error occurred');
     }
   };
+
+
 
   const handleRegister = async (event) => {
     event.preventDefault();
 
     try {
-      const action = await dispatch(registerUser({
+      await dispatch(registerUser({
         login: registerUsername,
         password: registerPassword
       }));
-      
-      if (action.payload?.success) {
-        alert('User created, you can now login');
-      } else {
-        alert(`Error creating user: ${action.payload?.message || 'Unknown error'}`);
-      }
+      alert('User created, you can now login');
+      resetForm();
+      setRegisterForm(!registerForm);
     } catch (error) {
       alert(`Error creating user: ${error.message}`);
     }
@@ -51,6 +53,9 @@ const LoginPage = () => {
     setRegisterPassword('');
   }
 
+  const goTest = () => {
+    console.log(username);
+  }
   return (
     <div className={styles['login-container']}>
       <div className={styles['login-form']}>
@@ -79,6 +84,10 @@ const LoginPage = () => {
           <div>
             Test account: login - 123, pass - 123
           </div>
+
+          <button onClick={goTest}>
+            Test button
+          </button>
 
         </div>
       </div>

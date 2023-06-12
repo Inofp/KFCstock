@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 
 const Botlane = ({ full }) => {
   const cartItems = useSelector((state) => state.cart); 
-  const totalQuantity = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const totalQuantity = cartItems.reduce((total, item) => total + (item ? item.quantity : 0), 0);
 
   return (
     <div className="fixed bottom-0 z-50 w-full lg:hidden">

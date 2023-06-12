@@ -3,13 +3,16 @@ import React, { useState } from 'react';
 import { BiUser } from 'react-icons/bi';
 import { logout } from '../../redux/authSlice';
 import { useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
 
 const MyPopup = ({ data, title }) => {
   const [isHovered, setHovered] = useState(false);
   const dispatch = useDispatch();
+  const Router = useRouter();
 
   const handleLogout = () => {
     dispatch(logout());
+    Router.push('/login');
   };
 
   return (

@@ -19,9 +19,10 @@ export default async function handler(req, res) {
 
   try {
     await client.connect();
-    const collection = client.db("kfc").collection("users");
+    const usersCollection = client.db("kfc").collection("users");
+    const cartCollection = client.db("kfc").collection("cart"); 
 
-    const userExists = await collection.findOne({ login });
+    const userExists = await usersCollection.findOne({ login });
 
     if (userExists) {
       res.status(409).json({ message: 'User already exists' });
@@ -30,7 +31,9 @@ export default async function handler(req, res) {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    const result = await collection.insertOne({ login, password: hashedPassword });
+    const result = await usersCollection.insertOne({ login, password: hashedPassword, favorites: [] });
+
+    await cartCollection.insertOne({ userId: result.insertedId, cartItems: [] });
 
     res.status(201).json({ message: 'User created', userId: result.insertedId });
 

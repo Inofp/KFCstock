@@ -10,11 +10,11 @@ export default async function handler(req, res) {
 
   if (req.method === 'POST') {
     const cartItems = req.body.cartItems;
-    await collection.updateOne({ userId: userId }, { $set: { cartItems } }, { upsert: true });
+    await collection.updateOne({ userId: new ObjectId(userId) }, { $set: { cartItems } }, { upsert: true });
     res.status(200).json({ success: true, message: 'Cart updated' });
   } else if (req.method === 'GET') {
     const userId = req.query.userId; 
-    const cart = await collection.findOne({ userId: userId });
+    const cart = await collection.findOne({ userId: new ObjectId(userId) });
     res.status(200).json({ success: true, cartItems: cart ? cart.cartItems : [] });
   } else {
     res.status(405).json({ success: false, message: 'Invalid request method' });

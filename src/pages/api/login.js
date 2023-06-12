@@ -35,6 +35,8 @@ export default async function handler(req, res) {
         { expiresIn: '7d' } 
       );
 
+   
+
       return res.status(200).json({ 
         success: true, 
         accessToken, 
@@ -48,7 +50,6 @@ export default async function handler(req, res) {
       
 
     } catch (error) {
-      console.error(error);
       return res.status(500).json({ success: false, message: 'Internal server error' });
     } finally {
       await client.close();

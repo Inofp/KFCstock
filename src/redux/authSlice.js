@@ -12,8 +12,9 @@ export const login = createAsyncThunk(
       Cookies.set("refreshToken", refreshToken);
       return user;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.response.data.message);
     }
+
   }
 );
 
@@ -37,10 +38,29 @@ export const registerUser = createAsyncThunk(
       const response = await axios.post('/api/register', user);
       return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkAPI.rejectWithValue(error.response.data.message);
     }
   }
 );
+
+export const fetchUser = createAsyncThunk(
+  'auth/fetchUser',
+  async (_, thunkAPI) => {
+    try {
+      const accessToken = Cookies.get("accessToken");
+      if (!accessToken) {
+        return thunkAPI.rejectWithValue("No access token found");
+      }
+      const response = await axios.get('/api/user', {
+        headers: { Authorization: `Bearer ${accessToken}` }
+      });
+      return response.data.user;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
 
 const initialState = {
   isAuthenticated: false,
@@ -72,6 +92,14 @@ export const authSlice = createSlice({
       .addCase(registerUser.rejected, (state, action) => {
         state.registrationStatus = 'failed';
         state.registrationError = action.error.message;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.isAuthenticated = true;
+        state.user = action.payload;
+      })
+      .addCase(fetchUser.rejected, (state) => {
+        state.isAuthenticated = false;
+        state.user = null;
       });
   },
 });

@@ -50,12 +50,6 @@ const Catalog = () => {
     dispatch(decreaseQuantity({ userId: user.id, itemId: item.id }));
   };
   
-
-
-  const makeTest = () => {
-    console.log(favorites);
-  }
-
   return (
     <div className="w-full min-h-full flex justify-center overflow-auto max-lg:pb-24 max-sm:pb-44">
       <div className="w-[1200px] max-lg:w-[650px] max-md:w-[510px] max-sm:w-[450px]">
@@ -157,9 +151,6 @@ const Catalog = () => {
                                       </div>
                                     </button>
                                     <div className='px-3  flex'>
-                                      <button onClick={() => makeTest()}>
-                                        Test
-                                      </button>
                                       <div className='text-2xl pr-4 text-[#b5b5b8] transition-colors duration-200 no-underline hover:text-inherit'><AiOutlineInfoCircle className='cursor-pointer' /></div>
                                       <div onClick={() => {
                                         if (favorites?.includes(item.id)) {

@@ -85,10 +85,6 @@ const LoginPage = () => {
             Test account: login - 123, pass - 123
           </div>
 
-          <button onClick={goTest}>
-            Test button
-          </button>
-
         </div>
       </div>
 

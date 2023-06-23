@@ -1,5 +1,5 @@
-import { MongoClient } from 'mongodb';
 import bcrypt from 'bcrypt';
+import { connectToDatabase } from '../../db/dbConnect';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -14,11 +14,8 @@ export default async function handler(req, res) {
     return;
   }
 
-  const uri = process.env.MONGODB_URI;
-  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-
   try {
-    await client.connect();
+    const client = await connectToDatabase(process.env.MONGODB_URI);
     const usersCollection = client.db("kfc").collection("users");
     const cartCollection = client.db("kfc").collection("cart"); 
 
@@ -39,7 +36,5 @@ export default async function handler(req, res) {
 
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error: error.message });
-  } finally {
-    await client.close();
   }
 }

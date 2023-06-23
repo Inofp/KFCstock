@@ -1,16 +1,13 @@
-import { MongoClient } from 'mongodb';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { connectToDatabase } from '../../db/dbConnect';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
-    const uri = process.env.MONGODB_URI;
-    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+    const client = await connectToDatabase(process.env.MONGODB_URI);
+    const collection = client.db('kfc').collection('users');
     
-    try {
-      await client.connect();
-      const collection = client.db('kfc').collection('users');
-      
+    try {  
       const user = await collection.findOne({ login: req.body.login });
 
       if (!user) {
@@ -35,8 +32,6 @@ export default async function handler(req, res) {
         { expiresIn: '7d' } 
       );
 
-   
-
       return res.status(200).json({ 
         success: true, 
         accessToken, 
@@ -47,12 +42,8 @@ export default async function handler(req, res) {
           favorites: user.favorites,
         } 
       });
-      
-
     } catch (error) {
       return res.status(500).json({ success: false, message: 'Internal server error' });
-    } finally {
-      await client.close();
     }
   }
   

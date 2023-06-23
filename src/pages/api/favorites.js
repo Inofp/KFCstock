@@ -1,12 +1,10 @@
-import { MongoClient } from 'mongodb';
 import { ObjectId } from 'mongodb';
+import { connectToDatabase } from '../../db/dbConnect';
 
 export default async function handler(req, res) {
-  const uri = process.env.MONGODB_URI;
-  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-  await client.connect();
+  const client = await connectToDatabase(process.env.MONGODB_URI);
   const collection = client.db('kfc').collection('users');
-  
+
   try {
     if (req.method === 'POST') {
       const { userId, productId } = req.body;
@@ -19,7 +17,7 @@ export default async function handler(req, res) {
     } else if (req.method === 'GET') {
       const { userId } = req.query;
       const user = await collection.findOne({ _id: new ObjectId(userId) });
-      
+
       if (user) {
         res.status(200).json({ success: true, favorites: user.favorites });
       } else {
@@ -30,7 +28,5 @@ export default async function handler(req, res) {
     }
   } catch (error) {
     res.status(500).json({ success: false, message: 'Internal server error' });
-  } finally {
-    await client.close();
-  }
+  } 
 }

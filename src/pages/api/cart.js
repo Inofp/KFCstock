@@ -1,9 +1,9 @@
-import { MongoClient, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
+import { connectToDatabase } from '../../db/dbConnect';
 
 export default async function handler(req, res) {
   const uri = process.env.MONGODB_URI;
-  const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-  await client.connect();
+  const client = await connectToDatabase(uri);
   const collection = client.db('kfc').collection('cart');
 
   const userId = req.body.userId;
@@ -20,5 +20,4 @@ export default async function handler(req, res) {
     res.status(405).json({ success: false, message: 'Invalid request method' });
   }
   
-  await client.close();
 }
